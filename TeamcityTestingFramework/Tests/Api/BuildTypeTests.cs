@@ -1,5 +1,8 @@
-﻿using System.Diagnostics;
+﻿using Allure.Net.Commons;
+using System.Diagnostics;
+using TeamcityTestingFramework.Api.Enums;
 using TeamcityTestingFramework.Api.Models;
+using TeamcityTestingFramework.Api.Requests.Checked;
 using TeamcityTestingFramework.Api.Spec;
 using static RestAssured.Dsl;
 
@@ -30,10 +33,19 @@ namespace TeamcityTestingFramework.Tests.Api
         [Category("CRUD")]
         public void UserCreatesBuildType()
         {
-           // create user
-           // create project by user
-           // create buildType for project by user
-           // check build type was created successfully with correct data           
+            AllureApi.Step("Create user", () =>
+            {
+                var user = new User("name", "password");
+
+                var requester = new CheckedBase<User>(Specifications.SuperUserAuth(), Endpoint.USERS);
+                requester.Create(user);
+            });
+            
+
+            // create user
+            // create project by user
+            // create buildType for project by user
+            // check build type was created successfully with correct data           
         }
 
         [Test(Description = "User should not be able to create two build types with the same id")]

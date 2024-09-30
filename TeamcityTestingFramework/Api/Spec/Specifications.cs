@@ -1,23 +1,15 @@
-﻿using RestAssured.Request.Builders;
+﻿using Microsoft.Extensions.Hosting;
+using RestAssured.Request.Builders;
 using RestAssured.Request.Logging;
 using TeamcityTestingFramework.Api.Models;
 
 namespace TeamcityTestingFramework.Api.Spec
 {
-    public class Specifications
+    public static class Specifications
     {
-        private readonly string _jsonContentType = "application/json";
-        private static Specifications _spec;
-
-        private Specifications() { }
-
-        public static Specifications GetSpec()
-        {
-            _spec ??= new Specifications();
-            return _spec;
-        }
-
-        private RequestSpecBuilder RequestBuilder()
+        private static readonly string _jsonContentType = "application/json";
+        
+        private static RequestSpecBuilder RequestBuilder()
         {
             var requestBuilder = new RequestSpecBuilder();
             requestBuilder
@@ -27,24 +19,26 @@ namespace TeamcityTestingFramework.Api.Spec
             return requestBuilder;
         }
 
-        public RequestSpecification UnauthSpec()
-        {            
+        public static RequestSpecification UnauthSpec()
+        {
             var requestBuilder = RequestBuilder();
-            //requestBuilder
-            //    .WithContentType(_jsonContentType)
-            //    .WithHeader("Accept", _jsonContentType);
             return requestBuilder.Build();
         }
 
-        public RequestSpecification AuthSpec(User user)
+        public static RequestSpecification AuthSpec(User user)
         {
             var requestBuilder = RequestBuilder();
-            //requestBuilder
-            //    .WithContentType(contentType: _jsonContentType)
-            //    .WithHeader("Accept", _jsonContentType);
-            var host = Config.Config.GetProperty("host");
             requestBuilder
-                .WithBasicAuth(user.Username, user.Password)
+                .WithBasicAuth(user.username, user.password)
+                .WithBaseUri($"http://{Config.Config.GetProperty("host")}");
+            return requestBuilder.Build();
+        }
+
+        public static RequestSpecification SuperUserAuth()
+        {
+            var requestBuilder = RequestBuilder();
+            requestBuilder
+                .WithBasicAuth("", Config.Config.GetProperty("superUserToken"))
                 .WithBaseUri($"http://{Config.Config.GetProperty("host")}");
             return requestBuilder.Build();
         }
