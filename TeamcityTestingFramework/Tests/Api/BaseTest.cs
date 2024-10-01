@@ -1,10 +1,10 @@
+using Allure.NUnit;
+
 namespace TeamcityTestingFramework.Tests.Api
 {
+    [AllureNUnit]
     public class BaseTest
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
+        
     }
 }

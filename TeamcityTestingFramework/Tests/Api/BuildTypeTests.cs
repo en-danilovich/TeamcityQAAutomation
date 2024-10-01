@@ -1,46 +1,30 @@
 ﻿using Allure.Net.Commons;
-using System.Diagnostics;
+using Allure.NUnit;
 using TeamcityTestingFramework.Api.Enums;
+using TeamcityTestingFramework.Api.Generators;
 using TeamcityTestingFramework.Api.Models;
 using TeamcityTestingFramework.Api.Requests.Checked;
 using TeamcityTestingFramework.Api.Spec;
-using static RestAssured.Dsl;
 
 namespace TeamcityTestingFramework.Tests.Api
 {
-    [TestFixture]
     [Category("Regression")]
     public class BuildTypeTests: BaseApiTest
     {
-        //[Test(Description ="User should be able to create build type")]
-        //[Category("Regression")]
-        //public void UserCreatesBuildTypeTest()
-        //{
-        //    var user = new User(Username: "admin", Password: "admin");
-
-        //    var token = Given()
-        //        .Spec(Specifications.GetSpec().AuthSpec(user))
-        //        .QueryParam("csrf")
-        //        .Get("/authenticationTest.html")
-        //        .Then().AssertThat().StatusCode(System.Net.HttpStatusCode.OK)
-        //        .Extract().Body().ToString();
-
-        //    Console.WriteLine(token);
-        //}
-
-        [Test(Description = "User should be able to create build type")]
+        //[Test(Description = "User should be able to create build type")]
+        [Test]
+        [Description("User should be able to create build type")]
         [Category("Positive")]
         [Category("CRUD")]
         public void UserCreatesBuildType()
         {
             AllureApi.Step("Create user", () =>
             {
-                var user = new User("name", "password");
+                var user = TestDataGenerator.Generate<User>();
 
                 var requester = new CheckedBase<User>(Specifications.SuperUserAuth(), Endpoint.USERS);
                 requester.Create(user);
             });
-            
 
             // create user
             // create project by user

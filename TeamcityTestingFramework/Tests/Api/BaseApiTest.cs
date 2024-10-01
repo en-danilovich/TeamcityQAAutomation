@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using RestAssured.Response.Logging;
-using TeamcityTestingFramework.Api.Config;
+﻿using RestAssured.Response.Logging;
 using static RestAssured.Dsl;
 
 namespace TeamcityTestingFramework.Tests.Api
