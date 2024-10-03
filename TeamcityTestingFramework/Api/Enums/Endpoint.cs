@@ -7,7 +7,16 @@ namespace TeamcityTestingFramework.Api.Enums
         public static readonly Endpoint BUILD_TYPES = new ("/app/rest/buildTypes", typeof(BuildType));
         public static readonly Endpoint PROJECTS = new ("/app/rest/projects", typeof(Project));
         public static readonly Endpoint USERS = new ("/app/rest/users", typeof(User));
+        public static readonly Endpoint AUTH_SETTINGS = new ("/app/rest/server/authSettings", typeof(AuthSettings));
         
+        public static readonly List<Endpoint> EndpointsList =
+        [
+            BUILD_TYPES,
+            PROJECTS,
+            USERS,
+            AUTH_SETTINGS
+        ];
+
         public string Url { get; private set; }
         public Type ModelClass { get; private set; }
         

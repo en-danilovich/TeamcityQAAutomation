@@ -1,9 +1,15 @@
-﻿namespace TeamcityTestingFramework.Api.Models
+﻿using RandomAttribute = TeamcityTestingFramework.Api.Attributes.RandomAttribute;
+
+namespace TeamcityTestingFramework.Api.Models
 {
-    public record Project: BaseModel
+    public class Project: BaseModel
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Locator { get; set; } = "_Root";
+        [Random]
+        public string id;
+
+        [Random]
+        public string name;
+
+        public string locator;
     }
 }

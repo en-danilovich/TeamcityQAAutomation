@@ -1,9 +1,7 @@
-﻿using Allure.Net.Commons;
-using Allure.NUnit;
-using TeamcityTestingFramework.Api.Enums;
+﻿using TeamcityTestingFramework.Api.Enums;
 using TeamcityTestingFramework.Api.Generators;
 using TeamcityTestingFramework.Api.Models;
-using TeamcityTestingFramework.Api.Requests.Checked;
+using TeamcityTestingFramework.Api.Requests;
 using TeamcityTestingFramework.Api.Spec;
 
 namespace TeamcityTestingFramework.Tests.Api
@@ -11,25 +9,25 @@ namespace TeamcityTestingFramework.Tests.Api
     [Category("Regression")]
     public class BuildTypeTests: BaseApiTest
     {
-        //[Test(Description = "User should be able to create build type")]
-        [Test]
-        [Description("User should be able to create build type")]
+        [Test(Description = "User should be able to create build type")]
         [Category("Positive")]
         [Category("CRUD")]
         public void UserCreatesBuildType()
         {
-            AllureApi.Step("Create user", () =>
-            {
-                var user = TestDataGenerator.Generate<User>();
+            var user = TestDataGenerator.Generate<User>();
 
-                var requester = new CheckedBase<User>(Specifications.SuperUserAuth(), Endpoint.USERS);
-                requester.Create(user);
-            });
+            var userCheckRequests = new CheckedRequests(Specifications.AuthSpec(user));                        
+            superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(user);
 
-            // create user
-            // create project by user
-            // create buildType for project by user
-            // check build type was created successfully with correct data           
+            var project = TestDataGenerator.Generate<Project>();
+            project = userCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(project);
+
+            var buildType = TestDataGenerator.Generate<BuildType>(new List<BaseModel> { project });            
+            userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Create(buildType);
+
+            var createdBuildType = userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Read(buildType.id);
+
+            softy.Assert(() => Assert.That(createdBuildType.name, Is.EqualTo(buildType.name), "Build type name is not correct"));
         }
 
         [Test(Description = "User should not be able to create two build types with the same id")]

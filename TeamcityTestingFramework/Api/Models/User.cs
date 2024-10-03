@@ -2,7 +2,7 @@
 
 namespace TeamcityTestingFramework.Api.Models
 {
-    public record User : BaseModel
+    public class User : BaseModel
     {
         [Random]
         public string username;
@@ -10,15 +10,6 @@ namespace TeamcityTestingFramework.Api.Models
         [Random]
         public string password;
 
-        public User(string username, string password)
-        {
-            this.username = username;
-            this.password = password;
-        }
-
-        public User()
-        {
-
-        }
+        public Roles roles;
     }
 }

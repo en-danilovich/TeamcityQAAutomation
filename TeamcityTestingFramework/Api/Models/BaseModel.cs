@@ -1,6 +1,6 @@
 ﻿namespace TeamcityTestingFramework.Api.Models
 {
-    public record BaseModel
+    public class BaseModel
     {
         
     }

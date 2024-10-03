@@ -3,17 +3,18 @@ using RandomAttribute = TeamcityTestingFramework.Api.Attributes.RandomAttribute;
 
 namespace TeamcityTestingFramework.Api.Models
 {
-    public record BuildType: BaseModel
+    public class BuildType: BaseModel
     {
-        public string Id { get; set; }
+        [Random]
+        public string id;
 
         [Random]
-        public string Name { get; set; }
+        public string name;
 
         [Parameterizable]
-        public Project Project { get; set; }
+        public Project project;
 
         [Optional]
-        public Steps Steps { get; set; }
+        public Steps steps;
     }
 }

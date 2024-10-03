@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using NUnit.Framework.Interfaces;
+using System.Collections;
 using System.Reflection;
 using TeamcityTestingFramework.Api.Attributes;
 using TeamcityTestingFramework.Api.Models;
@@ -9,8 +10,8 @@ namespace TeamcityTestingFramework.Api.Generators
     public class TestDataGenerator
     {
         private TestDataGenerator() { }
-
-        public static T Generate<T>(List<BaseModel> generatedModels, object[] parameters) where T : BaseModel, new()
+                
+        public static T Generate<T>(List<BaseModel> generatedModels, params object[] parameters) where T : BaseModel, new()
         {
             try
             {
@@ -42,13 +43,20 @@ namespace TeamcityTestingFramework.Api.Generators
                             field.SetValue(instance, generatedClass ?? Generate(field.FieldType, finalParameters));
                         }
                         // If the field is a List<BaseModel>
-                        else if (typeof(IEnumerable).IsAssignableFrom(field.FieldType))
+                        else if (typeof(IList).IsAssignableFrom(field.FieldType))
                         {
                             var listType = field.FieldType.GetGenericArguments()[0];
                             if (typeof(BaseModel).IsAssignableFrom(listType))
                             {
                                 object[] finalParameters = parameters;
-                                field.SetValue(instance, generatedClass != null ? new List<BaseModel> { generatedClass } : new List<BaseModel> { Generate(listType, finalParameters) });
+
+                                // workaround to create list with certain type inherited from BaseModel
+                                var issue = Generate(listType, finalParameters);
+                                Type listTypeG = typeof(List<>).MakeGenericType(issue.GetType());
+                                IList listInstance = (IList)Activator.CreateInstance(listTypeG);
+                                listInstance.Add(issue);
+
+                                field.SetValue(instance, generatedClass != null ? new List<BaseModel> { generatedClass } : listInstance);
                             }
                         }
                     }
@@ -70,7 +78,10 @@ namespace TeamcityTestingFramework.Api.Generators
         // Helper method to generate BaseModel object (for recursive calls)
         public static BaseModel Generate(Type modelType, object[] parameters)
         {
-            var method = typeof(TestDataGenerator).GetMethod(nameof(Generate), BindingFlags.Static | BindingFlags.Public);
+            var method = typeof(TestDataGenerator).GetMethod(nameof(Generate), BindingFlags.Static | BindingFlags.Public,
+                null,
+                new[] { typeof(List<BaseModel>), typeof(object[]) },
+                null);
             var generic = method.MakeGenericMethod(modelType);
             return (BaseModel)generic.Invoke(null, new object[] { new List<BaseModel>(), parameters });
         }

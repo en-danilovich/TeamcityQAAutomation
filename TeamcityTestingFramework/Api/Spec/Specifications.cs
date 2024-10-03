@@ -34,7 +34,7 @@ namespace TeamcityTestingFramework.Api.Spec
             return requestBuilder.Build();
         }
 
-        public static RequestSpecification SuperUserAuth()
+        public static RequestSpecification SuperUserAuthSpec()
         {
             var requestBuilder = RequestBuilder();
             requestBuilder
