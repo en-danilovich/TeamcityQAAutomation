@@ -16,18 +16,16 @@ namespace TeamcityTestingFramework.Tests.Api
         [Category("CRUD")]
         public void UserCreatesBuildType()
         {
-            var testData = TestDataGenerator.Generate();
+            var userCheckRequests = new CheckedRequests(Specifications.AuthSpec(TestData.User));                        
+            superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(TestData.User);
 
-            var userCheckRequests = new CheckedRequests(Specifications.AuthSpec(testData.User));                        
-            superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(testData.User);
-
-            userCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(testData.Project);
+            userCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(TestData.Project);
            
-            userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Create(testData.BuildType);
+            userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Create(TestData.BuildType);
 
-            var createdBuildType = userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Read(testData.BuildType.id);
+            var createdBuildType = userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Read(TestData.BuildType.id);
 
-            softy.Assert(() => Assert.That(createdBuildType.name, Is.EqualTo(testData.BuildType.name), "Build type name is not correct"));
+            softy.Assert(() => Assert.That(createdBuildType.name, Is.EqualTo(TestData.BuildType.name), "Build type name is not correct"));
         }
 
         [Test(Description = "User should not be able to create two build types with the same id")]
@@ -35,22 +33,18 @@ namespace TeamcityTestingFramework.Tests.Api
         [Category("CRUD")]
         public void UserCreatesTwoBuildTypesWithTheSameId()
         {
-            var user = TestDataGenerator.Generate<User>();
+            var userCheckRequests = new CheckedRequests(Specifications.AuthSpec(TestData.User));
+            superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(TestData.User);
 
-            var userCheckRequests = new CheckedRequests(Specifications.AuthSpec(user));
-            superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(user);
+            userCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(TestData.Project);
+            
+            var buildTypeWithSameId = TestDataGenerator.Generate<BuildType>(new List<BaseModel> { TestData.Project }, TestData.BuildType.id);
 
-            var project = TestDataGenerator.Generate<Project>();
-            project = userCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(project);
-
-            var buildType1 = TestDataGenerator.Generate<BuildType>(new List<BaseModel> { project });
-            var buildType2 = TestDataGenerator.Generate<BuildType>(new List<BaseModel> { project }, buildType1.id);
-
-            userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Create(buildType1);
-            new UncheckedBase(Specifications.AuthSpec(user), Endpoint.BUILD_TYPES)
-                .Create(buildType2)
+            userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Create(TestData.BuildType);
+            new UncheckedBase(Specifications.AuthSpec(TestData.User), Endpoint.BUILD_TYPES)
+                .Create(buildTypeWithSameId)
                 .Then().AssertThat().StatusCode(System.Net.HttpStatusCode.BadRequest)
-                .Body(new ContainsStringMatcher($"The build configuration / template ID \"{buildType1.id}\" is already used by another configuration or template"));
+                .Body(new ContainsStringMatcher($"The build configuration / template ID \"{TestData.BuildType.id}\" is already used by another configuration or template"));
         }
 
         [Test(Description = "Project admin should be able to create build type for their project")]

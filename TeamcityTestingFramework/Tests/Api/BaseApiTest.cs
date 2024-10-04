@@ -3,6 +3,7 @@ using RestAssured.Request.Logging;
 using RestAssured.Response.Logging;
 using System.Net;
 using TeamcityTestingFramework.Api.Enums;
+using TeamcityTestingFramework.Api.Generators;
 using TeamcityTestingFramework.Api.Models;
 using TeamcityTestingFramework.Api.Spec;
 using static RestAssured.Dsl;
