@@ -1,5 +1,4 @@
-﻿using NUnit.Framework.Interfaces;
-using System.Collections;
+﻿using System.Collections;
 using System.Reflection;
 using TeamcityTestingFramework.Api.Attributes;
 using TeamcityTestingFramework.Api.Models;
@@ -40,7 +39,7 @@ namespace TeamcityTestingFramework.Api.Generators
                         else if (typeof(BaseModel).IsAssignableFrom(field.FieldType))
                         {
                             object[] finalParameters = parameters;
-                            field.SetValue(instance, generatedClass ?? Generate(field.FieldType, finalParameters));
+                            field.SetValue(instance, generatedClass ?? Generate(field.FieldType, new List<BaseModel>(), finalParameters));
                         }
                         // If the field is a List<BaseModel>
                         else if (typeof(IList).IsAssignableFrom(field.FieldType))
@@ -51,7 +50,7 @@ namespace TeamcityTestingFramework.Api.Generators
                                 object[] finalParameters = parameters;
 
                                 // workaround to create list with certain type inherited from BaseModel
-                                var issue = Generate(listType, finalParameters);
+                                var issue = Generate(listType, new List<BaseModel>(),  finalParameters);
                                 Type listTypeG = typeof(List<>).MakeGenericType(issue.GetType());
                                 IList listInstance = (IList)Activator.CreateInstance(listTypeG);
                                 listInstance.Add(issue);
@@ -76,14 +75,41 @@ namespace TeamcityTestingFramework.Api.Generators
         }
 
         // Helper method to generate BaseModel object (for recursive calls)
-        public static BaseModel Generate(Type modelType, object[] parameters)
+        private static BaseModel Generate(Type modelType, List<BaseModel> generatedModels,  object[] parameters)
         {
             var method = typeof(TestDataGenerator).GetMethod(nameof(Generate), BindingFlags.Static | BindingFlags.Public,
                 null,
                 new[] { typeof(List<BaseModel>), typeof(object[]) },
                 null);
             var generic = method.MakeGenericMethod(modelType);
-            return (BaseModel)generic.Invoke(null, new object[] { new List<BaseModel>(), parameters });
+            return (BaseModel)generic.Invoke(null, new object[] { generatedModels, parameters });
+        }
+
+        public static TestData Generate()
+        {
+            try
+            {
+                // Создаем экземпляр класса TestData
+                var instance = (TestData)Activator.CreateInstance(typeof(TestData));
+                var generatedModels = new List<BaseModel>();
+
+                // Проходим по всем полям класса TestData
+                foreach (var field in typeof(TestData).GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance))
+                {
+                    if (typeof(BaseModel).IsAssignableFrom(field.FieldType))
+                    {
+                        // Генерируем модель рекурсивно
+                        var generatedModel = Generate(field.FieldType, generatedModels, []);
+                        field.SetValue(instance, generatedModel);
+                        generatedModels.Add(generatedModel);
+                    }
+                }
+                return instance;
+            }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException("Cannot generate test data", e);
+            }
         }
     }
 }

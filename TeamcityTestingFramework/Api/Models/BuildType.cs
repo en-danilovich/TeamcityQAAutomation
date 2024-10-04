@@ -6,6 +6,7 @@ namespace TeamcityTestingFramework.Api.Models
     public class BuildType: BaseModel
     {
         [Random]
+        [Parameterizable]
         public string id;
 
         [Random]

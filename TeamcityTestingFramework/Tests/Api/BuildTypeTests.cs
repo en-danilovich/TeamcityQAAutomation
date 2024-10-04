@@ -1,7 +1,9 @@
 ﻿using TeamcityTestingFramework.Api.Enums;
 using TeamcityTestingFramework.Api.Generators;
+using TeamcityTestingFramework.Api.Matchers;
 using TeamcityTestingFramework.Api.Models;
 using TeamcityTestingFramework.Api.Requests;
+using TeamcityTestingFramework.Api.Requests.Unchecked;
 using TeamcityTestingFramework.Api.Spec;
 
 namespace TeamcityTestingFramework.Tests.Api
@@ -14,20 +16,18 @@ namespace TeamcityTestingFramework.Tests.Api
         [Category("CRUD")]
         public void UserCreatesBuildType()
         {
-            var user = TestDataGenerator.Generate<User>();
+            var testData = TestDataGenerator.Generate();
 
-            var userCheckRequests = new CheckedRequests(Specifications.AuthSpec(user));                        
-            superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(user);
+            var userCheckRequests = new CheckedRequests(Specifications.AuthSpec(testData.User));                        
+            superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(testData.User);
 
-            var project = TestDataGenerator.Generate<Project>();
-            project = userCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(project);
+            userCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(testData.Project);
+           
+            userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Create(testData.BuildType);
 
-            var buildType = TestDataGenerator.Generate<BuildType>(new List<BaseModel> { project });            
-            userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Create(buildType);
+            var createdBuildType = userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Read(testData.BuildType.id);
 
-            var createdBuildType = userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Read(buildType.id);
-
-            softy.Assert(() => Assert.That(createdBuildType.name, Is.EqualTo(buildType.name), "Build type name is not correct"));
+            softy.Assert(() => Assert.That(createdBuildType.name, Is.EqualTo(testData.BuildType.name), "Build type name is not correct"));
         }
 
         [Test(Description = "User should not be able to create two build types with the same id")]
@@ -35,11 +35,22 @@ namespace TeamcityTestingFramework.Tests.Api
         [Category("CRUD")]
         public void UserCreatesTwoBuildTypesWithTheSameId()
         {
-            // create user
-            // create project by user
-            // create buildType1 for project by user
-            // create buildType2 with same id as buildType1 for project by user
-            // check buildType2 was not created with bad request code
+            var user = TestDataGenerator.Generate<User>();
+
+            var userCheckRequests = new CheckedRequests(Specifications.AuthSpec(user));
+            superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(user);
+
+            var project = TestDataGenerator.Generate<Project>();
+            project = userCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(project);
+
+            var buildType1 = TestDataGenerator.Generate<BuildType>(new List<BaseModel> { project });
+            var buildType2 = TestDataGenerator.Generate<BuildType>(new List<BaseModel> { project }, buildType1.id);
+
+            userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Create(buildType1);
+            new UncheckedBase(Specifications.AuthSpec(user), Endpoint.BUILD_TYPES)
+                .Create(buildType2)
+                .Then().AssertThat().StatusCode(System.Net.HttpStatusCode.BadRequest)
+                .Body(new ContainsStringMatcher($"The build configuration / template ID \"{buildType1.id}\" is already used by another configuration or template"));
         }
 
         [Test(Description = "Project admin should be able to create build type for their project")]
