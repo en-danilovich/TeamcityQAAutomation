@@ -2,6 +2,7 @@
 using RestAssured.Request.Builders;
 using System.Net;
 using TeamcityTestingFramework.Api.Enums;
+using TeamcityTestingFramework.Api.Generators;
 using TeamcityTestingFramework.Api.Models;
 using TeamcityTestingFramework.Api.Requests.Unchecked;
 
@@ -16,7 +17,10 @@ namespace TeamcityTestingFramework.Api.Requests.Checked
             var body = _uncheckedBase.Create(model)
                 .Then().AssertThat().StatusCode(HttpStatusCode.OK)
                 .Extract().Body();
-            return JsonConvert.DeserializeObject<T>(body);
+            var extractedObj = JsonConvert.DeserializeObject<T>(body);
+
+            TestDataStorage.GetInstance().AddCreatedEntity(endpoint, extractedObj);
+            return extractedObj;
         }
 
         public string Delete(string id)

@@ -33,12 +33,12 @@ namespace TeamcityTestingFramework.Tests.Api
         [Category("CRUD")]
         public void UserCreatesTwoBuildTypesWithTheSameId()
         {
+            var buildTypeWithSameId = TestDataGenerator.Generate<BuildType>(new List<BaseModel> { TestData.Project }, TestData.BuildType.id);
+
             var userCheckRequests = new CheckedRequests(Specifications.AuthSpec(TestData.User));
             superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(TestData.User);
 
-            userCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(TestData.Project);
-            
-            var buildTypeWithSameId = TestDataGenerator.Generate<BuildType>(new List<BaseModel> { TestData.Project }, TestData.BuildType.id);
+            userCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(TestData.Project);            
 
             userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Create(TestData.BuildType);
             new UncheckedBase(Specifications.AuthSpec(TestData.User), Endpoint.BUILD_TYPES)
