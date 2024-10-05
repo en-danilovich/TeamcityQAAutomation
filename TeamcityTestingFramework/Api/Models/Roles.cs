@@ -1,4 +1,6 @@
-﻿namespace TeamcityTestingFramework.Api.Models
+﻿using TeamcityTestingFramework.Api.Attributes;
+
+namespace TeamcityTestingFramework.Api.Models
 {
     public class Roles : BaseModel
     {
