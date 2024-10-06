@@ -1,9 +1,19 @@
-﻿namespace TeamcityTestingFramework.Api.Models
+﻿using TeamcityTestingFramework.Api.Attributes;
+using RandomAttribute = TeamcityTestingFramework.Api.Attributes.RandomAttribute;
+
+namespace TeamcityTestingFramework.Api.Models
 {
     public class Step: BaseModel
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; } = "simpleRunner";
+        [Random]
+        public string id;
+
+        [Random]
+        public string name;
+
+        public string type = "simpleRunner";
+
+        [Parameterizable]
+        public Properties properties;
     }
 }

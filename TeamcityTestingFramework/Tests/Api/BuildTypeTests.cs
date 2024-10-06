@@ -1,10 +1,13 @@
-﻿using TeamcityTestingFramework.Api.Enums;
+﻿using System.Threading;
+using TeamcityTestingFramework.Api.Enums;
 using TeamcityTestingFramework.Api.Generators;
 using TeamcityTestingFramework.Api.Matchers;
 using TeamcityTestingFramework.Api.Models;
 using TeamcityTestingFramework.Api.Requests;
+using TeamcityTestingFramework.Api.Requests.Checked;
 using TeamcityTestingFramework.Api.Requests.Unchecked;
 using TeamcityTestingFramework.Api.Spec;
+using TeamcityTestingFramework.Utils;
 
 namespace TeamcityTestingFramework.Tests.Api
 {
@@ -16,7 +19,7 @@ namespace TeamcityTestingFramework.Tests.Api
         [Category("CRUD")]
         public void UserCreatesBuildType()
         {
-            var userCheckRequests = new CheckedRequests(Specifications.AuthSpec(TestData.User));                        
+            var userCheckRequests = new CheckedRequests(Specifications.AuthSpec(TestData.User));
             superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(TestData.User);
 
             userCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(TestData.Project);
@@ -76,7 +79,7 @@ namespace TeamcityTestingFramework.Tests.Api
             superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(TestData.User);
 
             // create user2 with PROJECT_ADMIN role in project2
-            var secondProject = TestDataGenerator.Generate<Project>();            
+            var secondProject = TestDataGenerator.Generate<Project>();
             var secondUser = TestDataGenerator.Generate<User>(new Roles { role = [new Role() { roleId = "PROJECT_ADMIN", scope = $"p:{secondProject.id}" }]});
             superUserCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(secondProject);
             superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(secondUser);
@@ -88,6 +91,34 @@ namespace TeamcityTestingFramework.Tests.Api
             secondUserUncheckRequests.GetRequest(Endpoint.BUILD_TYPES).Create(buildTypeOfProject1)
                 .Then().AssertThat().StatusCode(System.Net.HttpStatusCode.Forbidden)
                 .Body(new ContainsStringMatcher($"You do not have enough permissions to edit project with id: {TestData.Project.id}"));
+        }
+
+        [Test(Description = "User should be able to start build and get success build result")]
+        public void UserStartsBuildAndGetsSuccessResult()
+        {
+            var userCheckRequests = new CheckedRequests(Specifications.AuthSpec(TestData.User));
+            superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(TestData.User);
+            userCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(TestData.Project);
+
+            var step = TestDataGenerator.GenerateCommandLineBuildStep("echo 'Hello World!'");
+            TestData.BuildType.steps = new Steps() { count = 1, step = [step] };
+            userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Create(TestData.BuildType);
+                        
+            var checkedBuildQueueRequest = new CheckedBuildQueueRequest(Specifications.AuthSpec(TestData.User));
+            var buildId = checkedBuildQueueRequest.StartBuild(TestData.BuildQueue).id;
+
+            var checkedBuildRequest = new CheckedBuildRequest(Specifications.AuthSpec(TestData.User));
+            var fnishedBuild = Wait.UntilActionIsFinished(() =>
+            {
+                var buildDetails = checkedBuildRequest.GetDetails($"id:{buildId}");
+                if (buildDetails.state != "finished")
+                {
+                    throw new Exception("Build status is not finished");
+                }
+                return buildDetails;
+            });
+            softy.Assert(() => Assert.That(fnishedBuild.status, Is.EqualTo("SUCCESS"), "Build status is not correct"));
+            // TODO: check Hello World! text was printed
         }
     }
 }
