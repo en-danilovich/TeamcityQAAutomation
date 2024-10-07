@@ -107,10 +107,10 @@ namespace TeamcityTestingFramework.Tests.Api
             var checkedBuildQueueRequest = new CheckedBuildQueueRequest(Specifications.AuthSpec(TestData.User));
             var buildId = checkedBuildQueueRequest.StartBuild(TestData.BuildQueue).id;
 
-            var checkedBuildRequest = new CheckedBuildRequest(Specifications.AuthSpec(TestData.User));
+            var checkedBuildSearchRequest = new CheckedSearchRequest<Build>(Specifications.AuthSpec(TestData.User), Endpoint.BUILDS);
             var fnishedBuild = Wait.UntilActionIsFinished(() =>
             {
-                var buildDetails = checkedBuildRequest.GetDetails($"id:{buildId}");
+                var buildDetails = checkedBuildSearchRequest.GetDetails($"id:{buildId}");
                 if (buildDetails.state != "finished")
                 {
                     throw new Exception("Build status is not finished");
@@ -119,6 +119,18 @@ namespace TeamcityTestingFramework.Tests.Api
             });
             softy.Assert(() => Assert.That(fnishedBuild.status, Is.EqualTo("SUCCESS"), "Build status is not correct"));
             // TODO: check Hello World! text was printed
+        }
+
+        [Test(Description = "User should be able to get project details by name locator")]
+        public void UserGetsProjectDetailsByNameLocator()
+        {
+            var userCheckRequests = new CheckedRequests(Specifications.AuthSpec(TestData.User));
+            superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(TestData.User);
+            userCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(TestData.Project);
+
+            var checkedProjectSearchRequest = new CheckedSearchRequest<Project>(Specifications.AuthSpec(TestData.User), Endpoint.PROJECTS);
+            var projectFound = checkedProjectSearchRequest.GetDetails($"name:{TestData.Project.name}");
+            softy.Assert(() => Assert.That(projectFound.id, Is.EqualTo(TestData.Project.id), "Incorrect project was found"));
         }
     }
 }

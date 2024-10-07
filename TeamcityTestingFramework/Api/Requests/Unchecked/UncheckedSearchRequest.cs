@@ -5,7 +5,7 @@ using static RestAssured.Dsl;
 
 namespace TeamcityTestingFramework.Api.Requests.Unchecked
 {
-    public class UncheckedBuildRequest(RequestSpecification spec) : Request(spec, Endpoint.BUILDS), IGetEntityDetailsByLocator<VerifiableResponse>
+    public class UncheckedSearchRequest(RequestSpecification spec, Endpoint endpoint) : Request(spec, endpoint), IGetEntityDetailsByLocator<VerifiableResponse>
     {
         public VerifiableResponse GetDetails(string locator = "")
         {
