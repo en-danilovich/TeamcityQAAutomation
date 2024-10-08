@@ -1,4 +1,5 @@
-﻿using RandomAttribute = TeamcityTestingFramework.Api.Attributes.RandomAttribute;
+﻿using TeamcityTestingFramework.Api.Attributes;
+using RandomAttribute = TeamcityTestingFramework.Api.Attributes.RandomAttribute;
 
 namespace TeamcityTestingFramework.Api.Models
 {
@@ -12,6 +13,7 @@ namespace TeamcityTestingFramework.Api.Models
         [Random]
         public string password;
 
+        [Parameterizable]
         public Roles roles;
     }
 }

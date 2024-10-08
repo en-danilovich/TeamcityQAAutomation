@@ -5,5 +5,6 @@
         public Project Project;
         public User User;
         public BuildType BuildType;
+        public BuildQueue BuildQueue;
     }
 }

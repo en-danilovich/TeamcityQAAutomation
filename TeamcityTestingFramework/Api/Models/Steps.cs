@@ -2,7 +2,7 @@
 {
     public class Steps : BaseModel
     {
-        public int count { get; set; }
-        public List<Step> step { get; set; }
+        public int count;
+        public List<Step> step;
     }
 }
