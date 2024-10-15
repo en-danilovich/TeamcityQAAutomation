@@ -2,8 +2,8 @@
 
 namespace TeamcityTestingFramework.Api.Models
 {
-    public class Roles : BaseModel
+    public class Properties
     {
-        public List<Role> role;
+        public List<Property> property;
     }
 }

@@ -111,5 +111,17 @@ namespace TeamcityTestingFramework.Api.Generators
                 throw new InvalidOperationException("Cannot generate test data", e);
             }
         }
+
+        public static Step GenerateCommandLineBuildStep(string scriptContent)
+        {
+            var stepProperties = new Properties()
+            {
+                property = [new Property { name = "script.content", value = scriptContent },
+                            new Property { name = "teamcity.step.mode", value = "default" },
+                            new Property { name = "use.custom.script", value = "true" }]
+            };
+            var step = Generate<Step>(stepProperties);
+            return step;
+        }
     }
 }
