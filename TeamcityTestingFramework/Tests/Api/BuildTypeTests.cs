@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using TeamcityTestingFramework.Api.Enums;
+﻿using TeamcityTestingFramework.Api.Enums;
 using TeamcityTestingFramework.Api.Generators;
 using TeamcityTestingFramework.Api.Matchers;
 using TeamcityTestingFramework.Api.Models;
@@ -7,6 +6,7 @@ using TeamcityTestingFramework.Api.Requests;
 using TeamcityTestingFramework.Api.Requests.Checked;
 using TeamcityTestingFramework.Api.Requests.Unchecked;
 using TeamcityTestingFramework.Api.Spec;
+using TeamcityTestingFramework.Extensions;
 using TeamcityTestingFramework.Utils;
 
 namespace TeamcityTestingFramework.Tests.Api
@@ -57,7 +57,7 @@ namespace TeamcityTestingFramework.Tests.Api
         {
             superUserCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(TestData.Project);
             
-            TestData.User.roles.role = [new Role() { roleId = "PROJECT_ADMIN", scope = $"p:{TestData.Project.id}" }];
+            TestData.User.roles.role = [new Role() { roleId = UserRole.ProjectAdmin.ToDescription(), scope = $"p:{TestData.Project.id}" }];
             superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(TestData.User);
 
             var userCheckRequests = new CheckedRequests(Specifications.AuthSpec(TestData.User));
@@ -75,12 +75,12 @@ namespace TeamcityTestingFramework.Tests.Api
         {
             // create user1 with PROJECT_ADMIN role in project1
             superUserCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(TestData.Project);
-            TestData.User.roles.role = [new Role() { roleId = "PROJECT_ADMIN", scope = $"p:{TestData.Project.id}" }];
+            TestData.User.roles.role = [new Role() { roleId = UserRole.ProjectAdmin.ToDescription(), scope = $"p:{TestData.Project.id}" }];
             superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(TestData.User);
 
             // create user2 with PROJECT_ADMIN role in project2
             var secondProject = TestDataGenerator.Generate<Project>();
-            var secondUser = TestDataGenerator.Generate<User>(new Roles { role = [new Role() { roleId = "PROJECT_ADMIN", scope = $"p:{secondProject.id}" }]});
+            var secondUser = TestDataGenerator.Generate<User>(new Roles { role = [new Role() { roleId = UserRole.ProjectAdmin.ToDescription(), scope = $"p:{secondProject.id}" }]});
             superUserCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(secondProject);
             superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(secondUser);
 
