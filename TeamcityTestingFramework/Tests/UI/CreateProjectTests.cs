@@ -24,7 +24,7 @@
         [Category("Negative")]
         public void UserCreatesProjectWithoutName()
         {
-            // Login as user
+            // Login as user 
             // Check number of projects
 
             // Open 'Create Project Page' http://localhost:8111/admin/createObjectMenu.html
