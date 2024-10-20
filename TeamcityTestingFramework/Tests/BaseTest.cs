@@ -3,8 +3,9 @@ using TeamcityTestingFramework.Api.Generators;
 using TeamcityTestingFramework.Api.Models;
 using TeamcityTestingFramework.Api.Requests;
 using TeamcityTestingFramework.Api.Spec;
+using TeamcityTestingFramework.Tests.Api;
 
-namespace TeamcityTestingFramework.Tests.Api
+namespace TeamcityTestingFramework.Tests
 {
     [AllureNUnit]
     [TestFixture]
