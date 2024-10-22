@@ -18,9 +18,13 @@ namespace TeamcityTestingFramework.Api.Config
             return _config;
         }
 
-        public static string GetProperty(string key)
+        public static T GetProperty<T>(string key)
         {
-            return GetConfig()._configuration[key];
+            var value = GetConfig()._configuration[key];
+
+            return value == null
+                ? throw new KeyNotFoundException($"Key '{key}' not found in configuration.")
+                : (T)Convert.ChangeType(value, typeof(T));
         }
 
         private void Initialize()

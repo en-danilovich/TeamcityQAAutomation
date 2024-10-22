@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Hosting;
-using RestAssured.Request.Builders;
+﻿using RestAssured.Request.Builders;
 using RestAssured.Request.Logging;
 using TeamcityTestingFramework.Api.Models;
 
@@ -30,7 +29,7 @@ namespace TeamcityTestingFramework.Api.Spec
             var requestBuilder = RequestBuilder();
             requestBuilder
                 .WithBasicAuth(user.username, user.password)
-                .WithBaseUri($"http://{Config.Config.GetProperty("host")}");
+                .WithBaseUri($"http://{Config.Config.GetProperty<string>("host")}");
             return requestBuilder.Build();
         }
 
@@ -38,8 +37,8 @@ namespace TeamcityTestingFramework.Api.Spec
         {
             var requestBuilder = RequestBuilder();
             requestBuilder
-                .WithBasicAuth("", Config.Config.GetProperty("superUserToken"))
-                .WithBaseUri($"http://{Config.Config.GetProperty("host")}");
+                .WithBasicAuth("", Config.Config.GetProperty<string>("superUserToken"))
+                .WithBaseUri($"http://{Config.Config.GetProperty<string>("host")}");
             return requestBuilder.Build();
         }
     }
