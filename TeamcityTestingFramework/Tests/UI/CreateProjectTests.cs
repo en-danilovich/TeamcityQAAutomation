@@ -1,19 +1,27 @@
-﻿namespace TeamcityTestingFramework.Tests.UI
+﻿using TeamcityTestingFramework.src.Api.Enums;
+using TeamcityTestingFramework.src.Api.Models;
+using TeamcityTestingFramework.src.UI.Pages;
+using TeamcityTestingFramework.src.UI.Pages.Admin;
+
+namespace TeamcityTestingFramework.Tests.UI
 {
     [Category("Regression")]
     public class CreateProjectTests : BaseUITest
     {
-        [Test(Description = "User should be able to create project")]
-        [Category("Positive")]        
-        public void UserCreatesProject()
-        {
-            // Login as user
+        private static readonly string REPO_URL = "https://github.com/en-danilovich/enotes-automation";
 
-            // Open 'Create Project Page' http://localhost:8111/admin/createObjectMenu.html
-            // Send all project parameters (repository URL)
-            // Click Proceed
-            // Fix Project Name and Build Type name values
-            // Click Proceed
+        [Test(Description = "User should be able to create project")]
+        [Category("Positive"), Category("Example")]
+        public async Task UserCreatesProject()
+        {
+            // подготовка окружения            
+            await LoginAsAsync(TestData.User);            
+
+            // взаимодействие с UI
+            var createProjectPage = new CreateProjectPage(Page);
+            await createProjectPage.NavigateAsync();
+            await createProjectPage.CreateForm(REPO_URL);
+            await createProjectPage.SetupProjectAsync(TestData.Project.name, TestData.BuildType.name);
 
             // Check that all entities (project, buildType) were sucessfully created with correct data on API level
 

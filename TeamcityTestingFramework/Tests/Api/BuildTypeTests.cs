@@ -1,13 +1,13 @@
-﻿using TeamcityTestingFramework.Api.Enums;
-using TeamcityTestingFramework.Api.Generators;
-using TeamcityTestingFramework.Api.Matchers;
-using TeamcityTestingFramework.Api.Models;
-using TeamcityTestingFramework.Api.Requests;
-using TeamcityTestingFramework.Api.Requests.Checked;
-using TeamcityTestingFramework.Api.Requests.Unchecked;
-using TeamcityTestingFramework.Api.Spec;
-using TeamcityTestingFramework.Extensions;
-using TeamcityTestingFramework.Utils;
+﻿using TeamcityTestingFramework.src.Api.Matchers;
+using TeamcityTestingFramework.src.Api.Requests;
+using TeamcityTestingFramework.src.Api.Requests.Checked;
+using TeamcityTestingFramework.src.Api.Requests.Unchecked;
+using TeamcityTestingFramework.src.Api.Enums;
+using TeamcityTestingFramework.src.Api.Generators;
+using TeamcityTestingFramework.src.Api.Models;
+using TeamcityTestingFramework.src.Api.Spec;
+using TeamcityTestingFramework.src.Extensions;
+using TeamcityTestingFramework.src.Utils;
 
 namespace TeamcityTestingFramework.Tests.Api
 {

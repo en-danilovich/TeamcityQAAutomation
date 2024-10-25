@@ -1,5 +1,8 @@
 ﻿using Microsoft.Playwright;
-using TeamcityTestingFramework.Api.Config;
+using TeamcityTestingFramework.src.Api.Config;
+using TeamcityTestingFramework.src.Api.Enums;
+using TeamcityTestingFramework.src.Api.Models;
+using TeamcityTestingFramework.src.UI.Pages;
 
 namespace TeamcityTestingFramework.Tests.UI
 {
@@ -8,18 +11,19 @@ namespace TeamcityTestingFramework.Tests.UI
         public IBrowser Browser { get; private set; }
         public IPage Page { get; private set; }
 
+
         [OneTimeSetUp]
-        // TODO: mayabe use setup attribute
         public async Task SetupUITest()
-        {            
-            var playwright = await Playwright.CreateAsync();
+        {
+            var playwright = await Playwright.CreateAsync();            
             var browserType = Config.GetProperty<string>("browser").ToLower();
 
             var browserLaunchOptions = new BrowserTypeLaunchOptions()
             {
-                Headless = false,
+                Headless = Config.GetProperty<bool>("headless"),
                 //Channel = "chrome",
-                ExecutablePath = Config.GetProperty<string>("remote"),                
+                //ExecutablePath = Config.GetProperty<string>("remote"),
+                
             };
 
             Browser = browserType switch
@@ -29,10 +33,16 @@ namespace TeamcityTestingFramework.Tests.UI
                 _ => await playwright.Chromium.LaunchAsync(browserLaunchOptions)
             };
 
-            Page = await Browser.NewPageAsync(new BrowserNewPageOptions
+            //var context = await Browser.NewContextAsync(new BrowserNewContextOptions()
+            //{
+            //    BaseURL = $"http://{Config.GetProperty<string>("host")}",
+            //    ViewportSize = new ViewportSize() { Width = Config.GetProperty<int>("viewportWidth"), Height = Config.GetProperty<int>("viewportHeight") },
+            //});
+
+            Page = await Browser.NewPageAsync(new BrowserNewPageOptions()
             {
                 BaseURL = $"http://{Config.GetProperty<string>("host")}",
-                ViewportSize = new ViewportSize() { Width = Config.GetProperty<int>("viewportWidth"), Height = Config.GetProperty<int>("viewportWidth") }
+                ViewportSize = new ViewportSize() { Width = Config.GetProperty<int>("viewportWidth"), Height = Config.GetProperty<int>("viewportHeight") },
             });
 
         }
@@ -40,8 +50,17 @@ namespace TeamcityTestingFramework.Tests.UI
         [TearDown]
         public async Task TearDown()
         {
-            await Page.CloseAsync();
+            //await Page.CloseAsync();
             await Browser.CloseAsync();
+        }
+
+        protected async Task LoginAsAsync(User user)
+        {
+            superUserCheckRequests.GetRequest<User>(Endpoint.USERS).Create(TestData.User);
+
+            var loginPage = new LoginPage(Page);
+            await loginPage.NavigateAsync();
+            await loginPage.LoginAsync(user);
         }
     }
 }

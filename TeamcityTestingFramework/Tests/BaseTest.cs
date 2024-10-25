@@ -1,8 +1,8 @@
 using Allure.NUnit;
-using TeamcityTestingFramework.Api.Generators;
-using TeamcityTestingFramework.Api.Models;
-using TeamcityTestingFramework.Api.Requests;
-using TeamcityTestingFramework.Api.Spec;
+using TeamcityTestingFramework.src.Api.Generators;
+using TeamcityTestingFramework.src.Api.Models;
+using TeamcityTestingFramework.src.Api.Requests;
+using TeamcityTestingFramework.src.Api.Spec;
 using TeamcityTestingFramework.Tests.Api;
 
 namespace TeamcityTestingFramework.Tests
