@@ -34,15 +34,14 @@ namespace TeamcityTestingFramework.Tests.UI
 
             var projectsPage = new ProjectsPage(Page);
             await projectsPage.NavigateAsync();
-            var projects = await projectsPage.GetProjectsAsync();
-            var tasks = projects.Select(async project =>
+            var tasks = (await projectsPage.GetProjectsAsync()).Select(async project =>
             {
                 var nameText = await project.Name.TextContentAsync();
                 return (project, nameText);
             });
             var results = await Task.WhenAll(tasks);
             var filteredProjects = results.Where(result => result.nameText == TestData.Project.name).ToList();
-            softy.Assert(() => Assert.That(filteredProjects.Count(), Is.EqualTo(1)));
+            softy.Assert(() => Assert.That(filteredProjects.Count, Is.EqualTo(1)));
         }
 
         [Test(Description = "User should not be able to create project without name")]
