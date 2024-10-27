@@ -23,12 +23,11 @@ namespace TeamcityTestingFramework.src.UI.Pages.Admin
             await BaseCreateFormAsync(repoUrl);
         }
 
-        public async Task<ProjectsPage> SetupProjectAsync(string projectName, string buildType)
+        public async Task SetupProjectAsync(string projectName, string buildType)
         {
             await _projectNameInput.FillAsync(projectName);
             await _buildTypeInput.FillAsync(buildType);
             await _submitButton.ClickAsync();
-            return new ProjectsPage(Page);
         }
     }
 }

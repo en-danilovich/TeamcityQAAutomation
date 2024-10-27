@@ -26,7 +26,7 @@ namespace TeamcityTestingFramework.Tests.Api
            
             userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Create(TestData.BuildType);
 
-            var createdBuildType = userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Read(TestData.BuildType.id);
+            var createdBuildType = userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Read($"id:{TestData.BuildType.id}");
 
             softy.Assert(() => Assert.That(createdBuildType.name, Is.EqualTo(TestData.BuildType.name), "Build type name is not correct"));
         }
@@ -63,7 +63,7 @@ namespace TeamcityTestingFramework.Tests.Api
             var userCheckRequests = new CheckedRequests(Specifications.AuthSpec(TestData.User));
 
             userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Create(TestData.BuildType);
-            var createdBuildType = userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Read(TestData.BuildType.id);
+            var createdBuildType = userCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Read($"id:{TestData.BuildType.id}");
 
             softy.Assert(() => Assert.That(createdBuildType.name, Is.EqualTo(TestData.BuildType.name), "Build type name is not correct"));
         }

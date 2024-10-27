@@ -2,7 +2,6 @@
 using RestAssured.Response;
 using TeamcityTestingFramework.src.Api.Enums;
 using TeamcityTestingFramework.src.Api.Models;
-using TeamcityTestingFramework.src.Api.Requests;
 using static RestAssured.Dsl;
 
 namespace TeamcityTestingFramework.src.Api.Requests.Unchecked
@@ -17,26 +16,26 @@ namespace TeamcityTestingFramework.src.Api.Requests.Unchecked
                 .Post(Endpoint.Url);
         }
 
-        public VerifiableResponse Delete(string id)
+        public VerifiableResponse Delete(string locator)
         {
             return Given()
                 .Spec(Spec)
-                .Delete($"{Endpoint.Url}/id:{id}");
+                .Delete($"{Endpoint.Url}/{locator}");
         }
 
-        public VerifiableResponse Read(string id)
+        public VerifiableResponse Read(string locator)
         {
             return Given()
                 .Spec(Spec)
-                .Get($"{Endpoint.Url}/id:{id}");
+                .Get($"{Endpoint.Url}/{locator}");
         }
 
-        public VerifiableResponse Update(string id, BaseModel model)
+        public VerifiableResponse Update(string locator, BaseModel model)
         {
             return Given()
                 .Spec(Spec)
                 .Body(model)
-                .Put($"{Endpoint.Url}/id:{id}");
+                .Put($"{Endpoint.Url}/{locator}");
         }
     }
 }

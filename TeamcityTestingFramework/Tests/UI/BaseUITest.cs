@@ -20,10 +20,7 @@ namespace TeamcityTestingFramework.Tests.UI
 
             var browserLaunchOptions = new BrowserTypeLaunchOptions()
             {
-                Headless = Config.GetProperty<bool>("headless"),
-                //Channel = "chrome",
-                //ExecutablePath = Config.GetProperty<string>("remote"),
-                
+                Headless = Config.GetProperty<bool>("headless"),                
             };
 
             Browser = browserType switch
@@ -32,12 +29,6 @@ namespace TeamcityTestingFramework.Tests.UI
                 "webkit" => await playwright.Webkit.LaunchAsync(browserLaunchOptions),
                 _ => await playwright.Chromium.LaunchAsync(browserLaunchOptions)
             };
-
-            //var context = await Browser.NewContextAsync(new BrowserNewContextOptions()
-            //{
-            //    BaseURL = $"http://{Config.GetProperty<string>("host")}",
-            //    ViewportSize = new ViewportSize() { Width = Config.GetProperty<int>("viewportWidth"), Height = Config.GetProperty<int>("viewportHeight") },
-            //});
 
             Page = await Browser.NewPageAsync(new BrowserNewPageOptions()
             {
@@ -50,7 +41,7 @@ namespace TeamcityTestingFramework.Tests.UI
         [TearDown]
         public async Task TearDown()
         {
-            //await Page.CloseAsync();
+            await Page.CloseAsync();
             await Browser.CloseAsync();
         }
 

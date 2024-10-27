@@ -33,7 +33,7 @@ namespace TeamcityTestingFramework.src.Api.Generators
             {
                 foreach (var id in ids)
                 {
-                    new UncheckedBase(Specifications.SuperUserAuthSpec(), endpoint).Delete(id);
+                    new UncheckedBase(Specifications.SuperUserAuthSpec(), endpoint).Delete($"id:{id}");
                 }
             }
 

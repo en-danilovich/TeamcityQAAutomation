@@ -1,4 +1,5 @@
-﻿using TeamcityTestingFramework.src.Api.Enums;
+﻿using Microsoft.Playwright;
+using TeamcityTestingFramework.src.Api.Enums;
 using TeamcityTestingFramework.src.Api.Models;
 using TeamcityTestingFramework.src.UI.Pages;
 using TeamcityTestingFramework.src.UI.Pages.Admin;
@@ -15,7 +16,7 @@ namespace TeamcityTestingFramework.Tests.UI
         public async Task UserCreatesProject()
         {
             // подготовка окружения            
-            await LoginAsAsync(TestData.User);            
+            await LoginAsAsync(TestData.User);
 
             // взаимодействие с UI
             var createProjectPage = new CreateProjectPage(Page);
@@ -23,9 +24,25 @@ namespace TeamcityTestingFramework.Tests.UI
             await createProjectPage.CreateForm(REPO_URL);
             await createProjectPage.SetupProjectAsync(TestData.Project.name, TestData.BuildType.name);
 
-            // Check that all entities (project, buildType) were sucessfully created with correct data on API level
+            var createdProject = superUserCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Read($"name:{TestData.Project.name}");
+            softy.Assert(() => Assert.That(createdProject, Is.Not.Null, $"Project with name {TestData.Project.name} was not found"));
 
             // Check that project is visible on Projects Page http://localhost:8111/favorite/projects
+            var projectPage = new ProjectPage(Page, createdProject.id);
+            await projectPage.NavigateAsync();
+            await Assertions.Expect(projectPage._projectTitle).ToHaveTextAsync(TestData.Project.name);
+
+            var projectsPage = new ProjectsPage(Page);
+            await projectsPage.NavigateAsync();
+            var projects = await projectsPage.GetProjectsAsync();
+            var tasks = projects.Select(async project =>
+            {
+                var nameText = await project.Name.TextContentAsync();
+                return (project, nameText);
+            });
+            var results = await Task.WhenAll(tasks);
+            var filteredProjects = results.Where(result => result.nameText == TestData.Project.name).ToList();
+            softy.Assert(() => Assert.That(filteredProjects.Count(), Is.EqualTo(1)));
         }
 
         [Test(Description = "User should not be able to create project without name")]
