@@ -10,7 +10,7 @@ using TeamcityTestingFramework.src.Constants;
 
 namespace TeamcityTestingFramework.Tests.UI
 {
-    [Category("Regression"), Category("UI1")]
+    [Category("Regression"), Category("UI")]
     public class CreateBuildTypeTests : BaseUITest
     {
         private static readonly string REPO_URL = "https://github.com/en-danilovich/enotes-automation";
@@ -54,8 +54,6 @@ namespace TeamcityTestingFramework.Tests.UI
         [Category("Negative")]
         public async Task UserCreatesBuildTypeWithoutName()
         {
-            await Page.WaitForTimeoutAsync(10000);
-
             // prepare data           
             superUserCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(TestData.Project);
             await LoginAsAsync(TestData.User);

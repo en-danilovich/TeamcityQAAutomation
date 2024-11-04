@@ -1,6 +1,7 @@
 ﻿using Microsoft.Playwright;
 using TeamcityTestingFramework.src.Api.Config;
 using TeamcityTestingFramework.src.Api.Enums;
+using TeamcityTestingFramework.src.Api.Generators;
 using TeamcityTestingFramework.src.Api.Models;
 using TeamcityTestingFramework.src.UI.Pages;
 
@@ -67,6 +68,15 @@ namespace TeamcityTestingFramework.Tests.UI
             var loginPage = new LoginPage(Page);
             await loginPage.NavigateAsync();
             await loginPage.LoginAsync(user);
+        }
+
+        protected void CreateProjectWithBuildType()
+        {
+            superUserCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Create(TestData.Project);
+
+            var step = TestDataGenerator.GenerateCommandLineBuildStep("echo 'Hello World!'");
+            TestData.BuildType.steps = new Steps() { count = 1, step = [step] };
+            superUserCheckRequests.GetRequest<BuildType>(Endpoint.BUILD_TYPES).Create(TestData.BuildType);
         }
     }
 }
