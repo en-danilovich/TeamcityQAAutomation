@@ -1,6 +1,7 @@
 ﻿using Microsoft.Playwright;
 using TeamcityTestingFramework.src.Api.Enums;
 using TeamcityTestingFramework.src.Api.Models;
+using TeamcityTestingFramework.src.Constants;
 using TeamcityTestingFramework.src.UI.Elements;
 using TeamcityTestingFramework.src.UI.Pages;
 using TeamcityTestingFramework.src.UI.Pages.Admin;
@@ -10,8 +11,6 @@ namespace TeamcityTestingFramework.Tests.UI
     [Category("Regression"), Category("UI")]
     public class CreateProjectTests : BaseUITest
     {
-        private static readonly string REPO_URL = "https://github.com/en-danilovich/enotes-automation";
-
         [Test(Description = "User should be able to create project")]
         [Category("Positive")]
         public async Task UserCreatesProject()
@@ -22,7 +21,7 @@ namespace TeamcityTestingFramework.Tests.UI
             // взаимодействие с UI
             var createProjectPage = new CreateProjectPage(Page);
             await createProjectPage.NavigateAsync();
-            await createProjectPage.CreateForm(REPO_URL);
+            await createProjectPage.CreateForm(CommonConstants.REPO_URL);
             await createProjectPage.SetupProjectAsync(TestData.Project.name, TestData.BuildType.name);
 
             var createdProject = superUserCheckRequests.GetRequest<Project>(Endpoint.PROJECTS).Read($"name:{TestData.Project.name}");

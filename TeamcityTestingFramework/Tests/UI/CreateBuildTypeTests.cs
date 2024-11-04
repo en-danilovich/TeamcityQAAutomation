@@ -13,8 +13,6 @@ namespace TeamcityTestingFramework.Tests.UI
     [Category("Regression"), Category("UI")]
     public class CreateBuildTypeTests : BaseUITest
     {
-        private static readonly string REPO_URL = "https://github.com/en-danilovich/enotes-automation";
-
         [Test(Description = "User should be able to create build type")]
         [Category("Positive")]
         public async Task UserCreatesBuildType()
@@ -26,7 +24,7 @@ namespace TeamcityTestingFramework.Tests.UI
             // ui steps
             var createBuildTypePage = new CreateBuildTypePage(Page);
             await createBuildTypePage.NavigateAsync(TestData.Project.id);
-            await createBuildTypePage.CreateFormAsync(REPO_URL);
+            await createBuildTypePage.CreateFormAsync(CommonConstants.REPO_URL);
             var buildTypeDetailsPage = await createBuildTypePage.SetupBuildTypeAsync(TestData.BuildType.name);
 
             // verify build type created on api level
@@ -36,9 +34,15 @@ namespace TeamcityTestingFramework.Tests.UI
 
             // verify build type details page and success massage
             softy.Assert(() =>
-                buildTypeDetailsPage.VerifyBuildTypeCreatedAsync(TestData.BuildType.name, REPO_URL + "#refs/heads/main").GetAwaiter().GetResult());
+                buildTypeDetailsPage.VerifyBuildTypeCreatedAsync(TestData.BuildType.name, CommonConstants.REPO_URL + "#refs/heads/main").GetAwaiter().GetResult());
 
-            // Check that build type is visible on Projects Page http://localhost:8111/favorite/projects
+            // verify build configuration page for created build type
+            var buildTypeId = buildTypeDetailsPage.ParseBuildtypeIdFromUrl();
+            var buildConfigurationPage = new BuildConfigurationPage(Page);
+            await buildConfigurationPage.NavigateAsync(buildTypeId);
+            softy.Assert(() => Assertions.Expect(buildConfigurationPage.BuildName).ToHaveTextAsync(TestData.BuildType.name).GetAwaiter().GetResult());
+
+            // check that build type is visible on Projects Page http://localhost:8111/favorite/projects
             var projectsPage = new ProjectsPage(Page);
             await projectsPage.NavigateAsync();
             var project = (await projectsPage.GetProjectsAsync()).FindProjectWithName(TestData.Project.name);
@@ -61,7 +65,7 @@ namespace TeamcityTestingFramework.Tests.UI
             // ui steps
             var createBuildTypePage = new CreateBuildTypePage(Page);
             await createBuildTypePage.NavigateAsync(TestData.Project.id);
-            await createBuildTypePage.CreateFormAsync(REPO_URL);
+            await createBuildTypePage.CreateFormAsync(CommonConstants.REPO_URL);
 
             await createBuildTypePage.BuildTypeInput.ClearAsync();
             await createBuildTypePage.SubmitButton.ClickAsync();
