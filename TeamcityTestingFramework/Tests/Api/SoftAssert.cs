@@ -15,7 +15,19 @@
                 _exceptions.Add(ex);
             }
         }
-                
+
+        public async Task AssertAsync(Action assertAction)
+        {
+            try
+            {
+                assertAction();
+            }
+            catch (Exception ex)
+            {
+                _exceptions.Add(ex);
+            }
+        }
+
         public void AssertAll()
         {
             if (_exceptions.Count > 0)

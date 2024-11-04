@@ -1,18 +1,19 @@
 ﻿using Microsoft.Playwright;
 using TeamcityTestingFramework.src.Api.Enums;
 using TeamcityTestingFramework.src.Api.Models;
+using TeamcityTestingFramework.src.UI.Elements;
 using TeamcityTestingFramework.src.UI.Pages;
 using TeamcityTestingFramework.src.UI.Pages.Admin;
 
 namespace TeamcityTestingFramework.Tests.UI
 {
-    [Category("Regression")]
+    [Category("Regression"), Category("UI")]
     public class CreateProjectTests : BaseUITest
     {
         private static readonly string REPO_URL = "https://github.com/en-danilovich/enotes-automation";
 
         [Test(Description = "User should be able to create project")]
-        [Category("Positive"), Category("Example")]
+        [Category("Positive")]
         public async Task UserCreatesProject()
         {
             // подготовка окружения            
@@ -34,14 +35,8 @@ namespace TeamcityTestingFramework.Tests.UI
 
             var projectsPage = new ProjectsPage(Page);
             await projectsPage.NavigateAsync();
-            var tasks = (await projectsPage.GetProjectsAsync()).Select(async project =>
-            {
-                var nameText = await project.Name.TextContentAsync();
-                return (project, nameText);
-            });
-            var results = await Task.WhenAll(tasks);
-            var filteredProjects = results.Where(result => result.nameText == TestData.Project.name).ToList();
-            softy.Assert(() => Assert.That(filteredProjects.Count, Is.EqualTo(1)));
+            var project = (await projectsPage.GetProjectsAsync()).FindProjectWithName(TestData.Project.name);
+            softy.Assert(() => Assert.That(project, Is.Not.Null));
         }
 
         [Test(Description = "User should not be able to create project without name")]

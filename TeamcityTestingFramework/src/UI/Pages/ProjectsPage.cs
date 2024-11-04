@@ -1,4 +1,5 @@
 ﻿using Microsoft.Playwright;
+using TeamcityTestingFramework.src.Extensions;
 using TeamcityTestingFramework.src.UI.Elements;
 
 namespace TeamcityTestingFramework.src.UI.Pages
@@ -19,13 +20,15 @@ namespace TeamcityTestingFramework.src.UI.Pages
         public async Task NavigateAsync()
         {
             await Page.GotoAsync(PROJECTS_URL);
+            await Page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
             await _header.WaitForAsync(new LocatorWaitForOptions() { State = WaitForSelectorState.Visible });
         }
 
         public async Task<List<ProjectElement>> GetProjectsAsync()
         {
+            await Page.WaitForTimeoutAsync(5000);
             var locators = await _projectElements.AllAsync();
-            return GeneratePageElements(locators, locator => new ProjectElement(locator));
+            return locators.GenerateElements(locator => new ProjectElement(locator));
         }
     }
 }

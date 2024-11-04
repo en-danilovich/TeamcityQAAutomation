@@ -1,4 +1,5 @@
 ﻿using Microsoft.Playwright;
+using System.Net;
 using TeamcityTestingFramework.src.Api.Models;
 
 namespace TeamcityTestingFramework.src.UI.Pages
@@ -27,8 +28,10 @@ namespace TeamcityTestingFramework.src.UI.Pages
         {
             await _userNameInput.FillAsync(user.username);
             await _passwordInput.FillAsync(user.password);
-            await _submitLoginInput.ClickAsync();
-            await Page.WaitForLoadStateAsync();
+            await Page.RunAndWaitForResponseAsync(async () =>
+            {
+                await _submitLoginInput.ClickAsync();
+            }, response => response.Url.Contains("loginSubmit.html") && response.Status == (int)HttpStatusCode.OK && response.Request.Method == "POST");
         }
     }
 }

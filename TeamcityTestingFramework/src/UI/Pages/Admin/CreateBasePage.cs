@@ -4,26 +4,30 @@ namespace TeamcityTestingFramework.src.UI.Pages.Admin
 {
     public abstract class CreateBasePage : BasePage
     {
-        protected static readonly string CREATE_URL = "admin/createObjectMenu.html?projectId={0}&showMode={1}";
+        protected static readonly string CREATE_URL = "/admin/createObjectMenu.html?projectId={0}&showMode={1}";
 
-        protected ILocator _repositoryUrlInput;
-        protected ILocator _submitButton;
-        protected ILocator _buildTypeInput;
-        protected ILocator _connectionSuccessfulMessage;
+        public readonly ILocator RepositoryUrlInput;
+        public readonly ILocator SubmitButton;
+
+        public readonly ILocator BuildTypeInput;
+        public readonly ILocator BuildTypeNameError;
+
+        public readonly ILocator ConnectionSuccessfulMessage;
 
         protected CreateBasePage(IPage page) : base(page)
         {
-            _repositoryUrlInput = Page.Locator("#url");
-            _submitButton = Page.Locator("[value='Proceed']");
-            _buildTypeInput = Page.Locator("#buildTypeName");
-            _connectionSuccessfulMessage = Page.Locator(".connectionSuccessful");
+            RepositoryUrlInput = Page.Locator("#url");
+            SubmitButton = Page.Locator("[value='Proceed']");
+            BuildTypeInput = Page.Locator("#buildTypeName");
+            BuildTypeNameError = Page.Locator("#error_buildTypeName");
+            ConnectionSuccessfulMessage = Page.Locator(".connectionSuccessful");
         }
 
         protected async Task BaseCreateFormAsync(string repoUrl)
         {
-            await _repositoryUrlInput.FillAsync(repoUrl);
-            await _submitButton.ClickAsync();
-            await Assertions.Expect(_connectionSuccessfulMessage).ToBeVisibleAsync(new LocatorAssertionsToBeVisibleOptions() { Timeout = BASE_WAITING_MS });
+            await RepositoryUrlInput.FillAsync(repoUrl);
+            await SubmitButton.ClickAsync();
+            await Assertions.Expect(ConnectionSuccessfulMessage).ToBeVisibleAsync(new LocatorAssertionsToBeVisibleOptions() { Timeout = BASE_WAITING_MS });
         }
     }
 }
