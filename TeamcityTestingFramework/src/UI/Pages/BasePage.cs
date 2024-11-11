@@ -1,5 +1,4 @@
 ﻿using Microsoft.Playwright;
-using TeamcityTestingFramework.src.UI.Elements;
 
 namespace TeamcityTestingFramework.src.UI.Pages
 {
@@ -12,11 +11,6 @@ namespace TeamcityTestingFramework.src.UI.Pages
         public BasePage(IPage page)
         {
             Page = page;
-        }
-
-        protected List<T> GeneratePageElements<T>(IReadOnlyList<ILocator> locatorsList, Func<ILocator, T> creator) where T : BasePageElement
-        {
-            return locatorsList.Select(creator).ToList();
         }
     }
 }

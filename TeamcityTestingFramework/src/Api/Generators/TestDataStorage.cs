@@ -22,6 +22,7 @@ namespace TeamcityTestingFramework.src.Api.Generators
             _instance ??= new TestDataStorage();
             return _instance;
         }
+
         public void AddCreatedEntity(Endpoint endpoint, BaseModel model)
         {
             AddCreatedEntity(endpoint, GetEntityIdOrLocator(model));

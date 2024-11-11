@@ -1,4 +1,8 @@
 ﻿using Microsoft.Playwright;
+using TeamcityTestingFramework.src.Api.Generators;
+using TeamcityTestingFramework.src.Api.Enums;
+using TeamcityTestingFramework.src.Api.Models;
+using System.Text.RegularExpressions;
 
 namespace TeamcityTestingFramework.src.UI.Pages.Admin
 {
@@ -23,11 +27,16 @@ namespace TeamcityTestingFramework.src.UI.Pages.Admin
             await BaseCreateFormAsync(repoUrl);
         }
 
-        public async Task SetupProjectAsync(string projectName, string buildType)
+        public async Task<BuildTypeDetailsPage> SetupProjectAsync(string projectName, string buildType)
         {
             await _projectNameInput.FillAsync(projectName);
-            await _buildTypeInput.FillAsync(buildType);
-            await _submitButton.ClickAsync();
-        }
+            await BuildTypeInput.FillAsync(buildType);
+            await SubmitButton.ClickAsync();
+
+            await Page.WaitForURLAsync($"**{BuildTypeDetailsPage.PAGE_URL}**");
+            var buildDetailsPage = new BuildTypeDetailsPage(Page);
+            TestDataStorage.GetInstance().AddCreatedEntity(Endpoint.PROJECTS, new Project() { id = buildDetailsPage.ParseProjectIdFromUrl() });
+            return buildDetailsPage;
+        }        
     }
 }
