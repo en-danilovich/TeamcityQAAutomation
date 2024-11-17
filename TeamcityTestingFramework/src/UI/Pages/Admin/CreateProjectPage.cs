@@ -1,8 +1,7 @@
 ﻿using Microsoft.Playwright;
-using TeamcityTestingFramework.src.Api.Generators;
 using TeamcityTestingFramework.src.Api.Enums;
+using TeamcityTestingFramework.src.Api.Generators;
 using TeamcityTestingFramework.src.Api.Models;
-using System.Text.RegularExpressions;
 
 namespace TeamcityTestingFramework.src.UI.Pages.Admin
 {

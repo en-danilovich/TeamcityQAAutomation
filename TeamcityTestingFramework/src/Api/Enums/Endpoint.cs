@@ -9,7 +9,7 @@ namespace TeamcityTestingFramework.src.Api.Enums
         public static readonly Endpoint BUILDS = new("/app/rest/builds", typeof(Build));
         public static readonly Endpoint PROJECTS = new("/app/rest/projects", typeof(Project));
         public static readonly Endpoint USERS = new("/app/rest/users", typeof(User));
-        public static readonly Endpoint AUTH_SETTINGS = new("/app/rest/server/authSettings", typeof(AuthSettings));
+        public static readonly Endpoint SERVER_AUTH_SETTINGS = new("/app/rest/server/authSettings", typeof(ServerAuthSettings));
 
         public static readonly List<Endpoint> EndpointsList =
         [
@@ -17,7 +17,7 @@ namespace TeamcityTestingFramework.src.Api.Enums
             BUILD_QUEUE,
             PROJECTS,
             USERS,
-            AUTH_SETTINGS,
+            SERVER_AUTH_SETTINGS,
             BUILDS
         ];
 
