@@ -1,0 +1,50 @@
+name: Run API tests
+on:
+  workflow_call:
+    inputs:
+      tests_folder:
+        description: Api | UI
+        required: true
+        type: string
+jobs:
+  validate-checkstyle:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    # Install dependencies
+    - name: Install dependencies
+      run: dotnet restore
+
+     # Code Formatting Check
+    - name: Code Formatting Check
+      run: dotnet format --check
+
+  run-tests:
+    needs: validate-checkstyle
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: TeamCity Setup
+      uses: ./.github/actions/teamcity-setup
+
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Build & Install
+      run: dotnet build
+
+    - name: Ensure browsers are installed
+      if: ${{ inputs.tests_folder == 'UI'}}
+      run: pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps chromium
+
+    - name: Run tests
+      continue-on-error: true
+      run: dotnet test --filter "FullyQualifiedName~Tests.${{ inputs.tests_folder }}&Category=Regression"

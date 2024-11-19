@@ -11,7 +11,7 @@ using TeamcityTestingFramework.src.Utils;
 
 namespace TeamcityTestingFramework.Tests.Api
 {
-    [Category("Regression")]
+    [Category("Regression"), Category("API")]
     public class BuildTypeTests: BaseApiTest
     {
         [Test(Description = "User should be able to create build type")]
