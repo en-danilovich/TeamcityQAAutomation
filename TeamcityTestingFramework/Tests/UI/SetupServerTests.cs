@@ -4,7 +4,7 @@ namespace TeamcityTestingFramework.Tests.UI
 {
     public class SetupServerTests : BaseUITest
     {
-        [Test, Category("Setup")]
+        [Test, Category("SetupServerTest")]
         public async Task SetupTeamCityServer()
         {
             var firstStartPage = new FirstStartPage(Page);
