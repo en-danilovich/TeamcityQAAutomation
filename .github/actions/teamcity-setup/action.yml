@@ -50,13 +50,15 @@ runs:
         jetbrains/teamcity-server:2023.11.1     
 
     - name: Build & Install
+      shell: bash
       run: dotnet build
 
     - name: Ensure browsers are installed
-      if: ${{ inputs.tests_folder == 'UI'}}
+      shell: bash
       run: pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps chromium
 
     - name: Setup TeamCity server
+      shell: bash
       run: |
         export SELENIUM_REMOTE_URL="http://${{ env.HOST }}:4444"
         echo "SELENIUM_REMOTE_URL=$SELENIUM_REMOTE_URL"
