@@ -45,4 +45,10 @@ jobs:
 
     - name: Run tests
       continue-on-error: true
-      run: dotnet test --filter "FullyQualifiedName~Tests.${{ inputs.tests_folder }}&Category=Regression"
+      shell: bash
+      run: |      
+        export SELENIUM_REMOTE_URL="http://${{ env.HOST }}:4444"
+        echo "SELENIUM_REMOTE_URL=$SELENIUM_REMOTE_URL"
+        dotnet test --filter "FullyQualifiedName~Tests.${{ inputs.tests_folder }}&Category=Regression"
+      env:
+        HOST: ${{ env.HOST }}
