@@ -26,7 +26,7 @@ runs:
     - name: Set up host appsettings.json property
       shell: bash
       run: |
-        jq '.host = env.HOST' TeamcityTestingFramework/appsettings.json > temp.json && mv temp.json TeamcityTestingFramework/appsettings.json
+        jq '.host = (env.HOST + ":8111")' TeamcityTestingFramework/appsettings.json > temp.json && mv temp.json TeamcityTestingFramework/appsettings.json
       env:
         HOST: ${{ env.HOST }}
 
