@@ -1,9 +1,11 @@
 ﻿using Microsoft.Playwright;
+using NUnit.Framework.Interfaces;
 using TeamcityTestingFramework.src.Api.Config;
 using TeamcityTestingFramework.src.Api.Enums;
 using TeamcityTestingFramework.src.Api.Generators;
 using TeamcityTestingFramework.src.Api.Models;
 using TeamcityTestingFramework.src.UI.Pages;
+using TeamcityTestingFramework.src.Utils;
 
 namespace TeamcityTestingFramework.Tests.UI
 {
@@ -49,6 +51,10 @@ namespace TeamcityTestingFramework.Tests.UI
         [TearDown]
         public async Task TearDown()
         {
+            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            {
+                await PlaywrightHelper.CaptureScreenshotOnFailureAsync(TestContext.CurrentContext.Test.Name);
+            }
             await Page.CloseAsync();
             await BrowserContext.CloseAsync();
         }

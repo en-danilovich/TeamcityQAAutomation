@@ -7,13 +7,15 @@ using TeamcityTestingFramework.src.UI.Elements;
 using TeamcityTestingFramework.src.Api.Requests.Unchecked;
 using TeamcityTestingFramework.src.Api.Spec;
 using TeamcityTestingFramework.src.Constants;
+using Allure.NUnit.Attributes;
 
 namespace TeamcityTestingFramework.Tests.UI
 {
     [Category("Regression"), Category("UI")]
     public class CreateBuildTypeTests : BaseUITest
     {
-        [Test(Description = "User should be able to create build type")]
+        [Test]
+        [AllureName("User should be able to create build type")]
         [Category("Positive")]
         public async Task UserCreatesBuildType()
         {
@@ -54,7 +56,8 @@ namespace TeamcityTestingFramework.Tests.UI
                 await Assertions.Expect(projectBuildTypes.First().BuildTypeButton).ToHaveAttributeAsync("aria-label", TestData.BuildType.name));
         }
 
-        [Test(Description = "User should not be able to create build type without name")]
+        [Test]
+        [AllureName("User should not be able to create build type without name")]
         [Category("Negative")]
         public async Task UserCreatesBuildTypeWithoutName()
         {
