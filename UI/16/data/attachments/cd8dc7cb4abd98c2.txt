@@ -1,0 +1,23 @@
+POST http://172.17.0.1:8111/app/rest/users
+Content-Type: application/json; charset=utf-8
+Content-Length: 123
+Accept: application/json
+Authorization: Basic Ojg0NjQ3MDMyOTQ1MDU3MTg0NDQ=
+{
+  "id": 0,
+  "username": "test_lxxyvrmshp",
+  "password": "test_jihklsufvi",
+  "roles": {
+    "role": [
+      {
+        "roleId": "SYSTEM_ADMIN",
+        "scope": "g"
+      }
+    ]
+  }
+}
+DELETE http://172.17.0.1:8111/app/rest/users/id:3
+Content-Type: application/json; charset=utf-8
+Content-Length: 0
+Accept: application/json
+Authorization: Basic Ojg0NjQ3MDMyOTQ1MDU3MTg0NDQ=
