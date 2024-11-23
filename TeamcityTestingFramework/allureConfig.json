@@ -1,6 +1,0 @@
-{
-  "allure": {
-    "directory": "allure-results",
-    "host": "http://localhost:8080"
-  }
-}

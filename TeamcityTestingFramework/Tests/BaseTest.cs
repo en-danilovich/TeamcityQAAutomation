@@ -9,7 +9,7 @@ namespace TeamcityTestingFramework.Tests
 {
     [AllureNUnit]
     [TestFixture]
-    public class BaseTest
+    public abstract class BaseTest
     {
         protected SoftAssert softy;
         protected CheckedRequests superUserCheckRequests = new(Specifications.SuperUserAuthSpec());
@@ -24,8 +24,7 @@ namespace TeamcityTestingFramework.Tests
 
         [TearDown]
         public void TestTearDown()
-        {
-            softy.AssertAll();
+        {            
             TestDataStorage.GetInstance().DeleteCreatedEntities();
         }
     }

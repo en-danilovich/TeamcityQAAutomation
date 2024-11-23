@@ -36,6 +36,12 @@ namespace TeamcityTestingFramework.Tests.Api
             });
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            softy.AssertAll();
+        }
+
         private void SetupServerAuthSettings()
         {
             // get current project permissions

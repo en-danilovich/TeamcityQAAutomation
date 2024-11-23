@@ -52,8 +52,8 @@ namespace TeamcityTestingFramework.Tests.UI
             softy.Assert(async() => await Assertions.Expect(project.SubprojectBuildTypesLocator).ToHaveCountAsync(1));            
 
             var projectBuildTypes = await project.GetSubprojectBuildTypes();
-            softy.Assert(async () => 
-                await Assertions.Expect(projectBuildTypes.First().BuildTypeButton).ToHaveAttributeAsync("aria-label", TestData.BuildType.name));
+            softy.Assert(() => 
+                Assertions.Expect(projectBuildTypes.First().BuildTypeButton).ToHaveAttributeAsync("aria-label", TestData.BuildType.name).GetAwaiter().GetResult());
         }
 
         [Test]

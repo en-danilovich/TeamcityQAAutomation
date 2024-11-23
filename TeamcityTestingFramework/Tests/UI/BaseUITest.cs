@@ -51,12 +51,20 @@ namespace TeamcityTestingFramework.Tests.UI
         [TearDown]
         public async Task TearDown()
         {
-            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            try
             {
-                await new PlaywrightHelper().CaptureScreenshotOnFailureAsync(TestContext.CurrentContext.Test.Name);
+                softy.AssertAll();
             }
-            await Page.CloseAsync();
-            await BrowserContext.CloseAsync();
+            catch(AggregateException ex)
+            {
+                await new PlaywrightHelper(Page).CaptureScreenshotOnFailureAsync(TestContext.CurrentContext.Test.Name);
+                Assert.Fail(ex.Message);
+            }
+            finally
+            {                
+                await Page.CloseAsync();
+                await BrowserContext.CloseAsync();
+            }
         }
 
         [OneTimeTearDown]

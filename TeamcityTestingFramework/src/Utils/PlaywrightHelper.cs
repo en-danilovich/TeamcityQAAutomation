@@ -7,7 +7,7 @@ namespace TeamcityTestingFramework.src.Utils
     {
         private IPage _page;
 
-        public void SetPage(IPage page)
+        public PlaywrightHelper(IPage page)
         {
             _page = page;
         }
@@ -20,7 +20,10 @@ namespace TeamcityTestingFramework.src.Utils
             }
 
             var screenshotPath = Path.Combine(Directory.GetCurrentDirectory(), "allure-results", $"{testName}-screenshot.png");
-            var screenshotBytes = await _page.ScreenshotAsync(new PageScreenshotOptions { FullPage = true });
+
+            Directory.CreateDirectory(Path.GetDirectoryName(screenshotPath));
+
+            var screenshotBytes = await _page.ScreenshotAsync(new PageScreenshotOptions { Path = screenshotPath });
 
             // Save screenshot as attachment in Allure report
             AllureApi.AddAttachment($"{testName} Screenshot", "image/png", screenshotBytes, ".png");
