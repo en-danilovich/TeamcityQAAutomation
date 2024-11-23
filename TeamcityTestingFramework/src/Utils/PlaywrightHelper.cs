@@ -5,14 +5,14 @@ namespace TeamcityTestingFramework.src.Utils
 {
     public class PlaywrightHelper
     {
-        private static IPage _page;
+        private IPage _page;
 
-        public static void SetPage(IPage page)
+        public void SetPage(IPage page)
         {
             _page = page;
         }
 
-        public static async Task CaptureScreenshotOnFailureAsync(string testName)
+        public async Task CaptureScreenshotOnFailureAsync(string testName)
         {
             if (_page == null)
             {

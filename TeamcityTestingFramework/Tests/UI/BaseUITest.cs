@@ -53,7 +53,7 @@ namespace TeamcityTestingFramework.Tests.UI
         {
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
-                await PlaywrightHelper.CaptureScreenshotOnFailureAsync(TestContext.CurrentContext.Test.Name);
+                await new PlaywrightHelper().CaptureScreenshotOnFailureAsync(TestContext.CurrentContext.Test.Name);
             }
             await Page.CloseAsync();
             await BrowserContext.CloseAsync();
