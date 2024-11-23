@@ -1,0 +1,398 @@
+POST http://172.17.0.1:8111/app/rest/users
+Content-Type: application/json; charset=utf-8
+Content-Length: 123
+Accept: application/json
+Authorization: Basic OjE4MDIxNjY2NTMyODcwNDYzMDE=
+{
+  "id": 0,
+  "username": "test_wuvborlaux",
+  "password": "test_kyaisjwamc",
+  "roles": {
+    "role": [
+      {
+        "roleId": "SYSTEM_ADMIN",
+        "scope": "g"
+      }
+    ]
+  }
+}
+HTTP 200 (OK)
+Content-Type: application/json
+Content-Length: 601
+X-Frame-Options: sameorigin
+Strict-Transport-Security: max-age=31536000;
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: origin-when-cross-origin
+mixed-content: noupgrade
+TeamCity-Node-Id: MAIN_SERVER
+Set-Cookie: TCSESSIONID=CBAF20EA5E2EC4042851ABF18D1A07BD; Path=/; HttpOnly, RecentLogin=; Max-Age=10; Expires=Sat, 23 Nov 2024 16:40:39 GMT; Path=/, RememberMe=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:10 GMT; Path=/; HttpOnly
+Cache-Control: no-store
+Transfer-Encoding: chunked
+Date: Sat, 23 Nov 2024 16:40:29 GMT
+Cookie: TCSESSIONID=CBAF20EA5E2EC4042851ABF18D1A07BD, Domain: 172.17.0.1, HTTP-only: True, Secure: False
+Cookie: RecentLogin=, Domain: 172.17.0.1, HTTP-only: False, Secure: False
+{
+  "username": "test_wuvborlaux",
+  "id": 4,
+  "href": "/app/rest/users/id:4",
+  "properties": {
+    "property": [
+      {
+        "name": "addTriggeredBuildToFavorites",
+        "value": "true"
+      },
+      {
+        "name": "plugin:vcs:anyVcs:anyVcsRoot",
+        "value": "test_wuvborlaux"
+      },
+      {
+        "name": "teamcity.server.buildNumber",
+        "value": "147412"
+      }
+    ],
+    "count": 3,
+    "href": "/app/rest/users/id:4/properties"
+  },
+  "roles": {
+    "role": [
+      {
+        "roleId": "SYSTEM_ADMIN",
+        "scope": "g",
+        "href": "/app/rest/users/id:4/roles/SYSTEM_ADMIN/g"
+      }
+    ]
+  },
+  "groups": {
+    "count": 1,
+    "group": [
+      {
+        "key": "ALL_USERS_GROUP",
+        "name": "All Users",
+        "href": "/app/rest/userGroups/key:ALL_USERS_GROUP",
+        "description": "Contains all TeamCity users"
+      }
+    ]
+  }
+}
+Response time: 47.8936 ms
+POST http://172.17.0.1:8111/app/rest/projects
+Content-Type: application/json; charset=utf-8
+Content-Length: 64
+Accept: application/json
+Authorization: Basic dGVzdF93dXZib3JsYXV4OnRlc3Rfa3lhaXNqd2FtYw==
+{
+  "id": "test_alokesohpd",
+  "name": "test_prtgqlwvhg",
+  "locator": null
+}
+HTTP 200 (OK)
+Content-Type: application/json
+Content-Length: 824
+X-Frame-Options: sameorigin
+Strict-Transport-Security: max-age=31536000;
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: origin-when-cross-origin
+mixed-content: noupgrade
+TeamCity-Node-Id: MAIN_SERVER
+Set-Cookie: TCSESSIONID=0D2B25DF61762C0F805C34E9742E500C; Path=/; HttpOnly, RecentLogin=; Max-Age=10; Expires=Sat, 23 Nov 2024 16:40:39 GMT; Path=/, RememberMe=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:10 GMT; Path=/; HttpOnly
+Cache-Control: no-store
+Transfer-Encoding: chunked
+Date: Sat, 23 Nov 2024 16:40:29 GMT
+Cookie: TCSESSIONID=0D2B25DF61762C0F805C34E9742E500C, Domain: 172.17.0.1, HTTP-only: True, Secure: False
+Cookie: RecentLogin=, Domain: 172.17.0.1, HTTP-only: False, Secure: False
+{
+  "id": "test_alokesohpd",
+  "name": "test_prtgqlwvhg",
+  "parentProjectId": "_Root",
+  "virtual": false,
+  "href": "/app/rest/projects/id:test_alokesohpd",
+  "webUrl": "http://localhost:8111/project.html?projectId=test_alokesohpd",
+  "parentProject": {
+    "id": "_Root",
+    "name": "<Root project>",
+    "description": "Contains all other projects",
+    "href": "/app/rest/projects/id:_Root",
+    "webUrl": "http://localhost:8111/project.html?projectId=_Root"
+  },
+  "buildTypes": {
+    "count": 0,
+    "buildType": []
+  },
+  "templates": {
+    "count": 0,
+    "buildType": []
+  },
+  "deploymentDashboards": {
+    "count": 0
+  },
+  "parameters": {
+    "property": [],
+    "count": 0,
+    "href": "/app/rest/projects/id:test_alokesohpd/parameters"
+  },
+  "vcsRoots": {
+    "count": 0,
+    "href": "/app/rest/vcs-roots?locator=project:(id:test_alokesohpd)"
+  },
+  "projectFeatures": {
+    "count": 0,
+    "href": "/app/rest/projects/id:test_alokesohpd/projectFeatures"
+  },
+  "projects": {
+    "count": 0
+  }
+}
+Response time: 87.3821 ms
+POST http://172.17.0.1:8111/app/rest/buildTypes
+Content-Type: application/json; charset=utf-8
+Content-Length: 137
+Accept: application/json
+Authorization: Basic dGVzdF93dXZib3JsYXV4OnRlc3Rfa3lhaXNqd2FtYw==
+{
+  "id": "test_mwjrymanlw",
+  "name": "test_vbyffibfja",
+  "project": {
+    "id": "test_alokesohpd",
+    "name": "test_prtgqlwvhg",
+    "locator": null
+  },
+  "steps": null
+}
+HTTP 200 (OK)
+Content-Type: application/json
+Content-Length: 1164
+X-Frame-Options: sameorigin
+Strict-Transport-Security: max-age=31536000;
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: origin-when-cross-origin
+mixed-content: noupgrade
+TeamCity-Node-Id: MAIN_SERVER
+Set-Cookie: TCSESSIONID=81D44120872BA103D0C44FF4100EB5EC; Path=/; HttpOnly, RecentLogin=; Max-Age=10; Expires=Sat, 23 Nov 2024 16:40:39 GMT; Path=/, RememberMe=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:10 GMT; Path=/; HttpOnly
+Cache-Control: no-store
+Transfer-Encoding: chunked
+Date: Sat, 23 Nov 2024 16:40:29 GMT
+Cookie: TCSESSIONID=81D44120872BA103D0C44FF4100EB5EC, Domain: 172.17.0.1, HTTP-only: True, Secure: False
+Cookie: RecentLogin=, Domain: 172.17.0.1, HTTP-only: False, Secure: False
+{
+  "id": "test_mwjrymanlw",
+  "name": "test_vbyffibfja",
+  "projectName": "test_prtgqlwvhg",
+  "projectId": "test_alokesohpd",
+  "href": "/app/rest/buildTypes/id:test_mwjrymanlw",
+  "webUrl": "http://localhost:8111/viewType.html?buildTypeId=test_mwjrymanlw",
+  "project": {
+    "id": "test_alokesohpd",
+    "name": "test_prtgqlwvhg",
+    "parentProjectId": "_Root",
+    "href": "/app/rest/projects/id:test_alokesohpd",
+    "webUrl": "http://localhost:8111/project.html?projectId=test_alokesohpd"
+  },
+  "templates": {
+    "count": 0,
+    "buildType": []
+  },
+  "vcs-root-entries": {
+    "count": 0,
+    "vcs-root-entry": []
+  },
+  "settings": {
+    "property": [
+      {
+        "name": "buildNumberCounter",
+        "value": "1"
+      }
+    ],
+    "count": 1
+  },
+  "parameters": {
+    "property": [],
+    "count": 0,
+    "href": "/app/rest/buildTypes/id:test_mwjrymanlw/parameters"
+  },
+  "steps": {
+    "count": 0
+  },
+  "features": {
+    "count": 0
+  },
+  "triggers": {
+    "count": 0
+  },
+  "snapshot-dependencies": {
+    "count": 0
+  },
+  "artifact-dependencies": {
+    "count": 0
+  },
+  "agent-requirements": {
+    "count": 0
+  },
+  "builds": {
+    "href": "/app/rest/buildTypes/id:test_mwjrymanlw/builds/"
+  },
+  "investigations": {
+    "href": "/app/rest/investigations?locator=buildType:(id:test_mwjrymanlw)"
+  },
+  "compatibleAgents": {
+    "href": "/app/rest/agents?locator=compatible:(buildType:(id:test_mwjrymanlw))"
+  },
+  "compatibleCloudImages": {}
+}
+Response time: 60.5072 ms
+GET http://172.17.0.1:8111/app/rest/buildTypes/id:test_mwjrymanlw
+Content-Type: application/json; charset=utf-8
+Content-Length: 0
+Accept: application/json
+Authorization: Basic dGVzdF93dXZib3JsYXV4OnRlc3Rfa3lhaXNqd2FtYw==
+HTTP 200 (OK)
+Content-Type: application/json
+Content-Length: 1164
+X-Frame-Options: sameorigin
+Strict-Transport-Security: max-age=31536000;
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: origin-when-cross-origin
+mixed-content: noupgrade
+TeamCity-Node-Id: MAIN_SERVER
+Set-Cookie: TCSESSIONID=F84728512CB5C3002D0127981C0EB85B; Path=/; HttpOnly, RecentLogin=; Max-Age=10; Expires=Sat, 23 Nov 2024 16:40:39 GMT; Path=/, RememberMe=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:10 GMT; Path=/; HttpOnly
+Cache-Control: no-store
+Transfer-Encoding: chunked
+Date: Sat, 23 Nov 2024 16:40:29 GMT
+Cookie: TCSESSIONID=F84728512CB5C3002D0127981C0EB85B, Domain: 172.17.0.1, HTTP-only: True, Secure: False
+Cookie: RecentLogin=, Domain: 172.17.0.1, HTTP-only: False, Secure: False
+{
+  "id": "test_mwjrymanlw",
+  "name": "test_vbyffibfja",
+  "projectName": "test_prtgqlwvhg",
+  "projectId": "test_alokesohpd",
+  "href": "/app/rest/buildTypes/id:test_mwjrymanlw",
+  "webUrl": "http://localhost:8111/viewType.html?buildTypeId=test_mwjrymanlw",
+  "project": {
+    "id": "test_alokesohpd",
+    "name": "test_prtgqlwvhg",
+    "parentProjectId": "_Root",
+    "href": "/app/rest/projects/id:test_alokesohpd",
+    "webUrl": "http://localhost:8111/project.html?projectId=test_alokesohpd"
+  },
+  "templates": {
+    "count": 0,
+    "buildType": []
+  },
+  "vcs-root-entries": {
+    "count": 0,
+    "vcs-root-entry": []
+  },
+  "settings": {
+    "property": [
+      {
+        "name": "buildNumberCounter",
+        "value": "1"
+      }
+    ],
+    "count": 1
+  },
+  "parameters": {
+    "property": [],
+    "count": 0,
+    "href": "/app/rest/buildTypes/id:test_mwjrymanlw/parameters"
+  },
+  "steps": {
+    "count": 0
+  },
+  "features": {
+    "count": 0
+  },
+  "triggers": {
+    "count": 0
+  },
+  "snapshot-dependencies": {
+    "count": 0
+  },
+  "artifact-dependencies": {
+    "count": 0
+  },
+  "agent-requirements": {
+    "count": 0
+  },
+  "builds": {
+    "href": "/app/rest/buildTypes/id:test_mwjrymanlw/builds/"
+  },
+  "investigations": {
+    "href": "/app/rest/investigations?locator=buildType:(id:test_mwjrymanlw)"
+  },
+  "compatibleAgents": {
+    "href": "/app/rest/agents?locator=compatible:(buildType:(id:test_mwjrymanlw))"
+  },
+  "compatibleCloudImages": {}
+}
+Response time: 24.3002 ms
+DELETE http://172.17.0.1:8111/app/rest/users/id:4
+Content-Type: application/json; charset=utf-8
+Content-Length: 0
+Accept: application/json
+Authorization: Basic OjE4MDIxNjY2NTMyODcwNDYzMDE=
+HTTP 204 (NoContent)
+Content-Type: application/json
+Content-Length: 0
+X-Frame-Options: sameorigin
+Strict-Transport-Security: max-age=31536000;
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: origin-when-cross-origin
+mixed-content: noupgrade
+TeamCity-Node-Id: MAIN_SERVER
+Set-Cookie: TCSESSIONID=E86F4F9A6CC06EBE8C0167E722347EC9; Path=/; HttpOnly, RecentLogin=; Max-Age=10; Expires=Sat, 23 Nov 2024 16:40:39 GMT; Path=/, RememberMe=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:10 GMT; Path=/; HttpOnly
+Cache-Control: no-store
+Date: Sat, 23 Nov 2024 16:40:29 GMT
+Cookie: TCSESSIONID=E86F4F9A6CC06EBE8C0167E722347EC9, Domain: 172.17.0.1, HTTP-only: True, Secure: False
+Cookie: RecentLogin=, Domain: 172.17.0.1, HTTP-only: False, Secure: False
+Response time: 11.8571 ms
+DELETE http://172.17.0.1:8111/app/rest/projects/id:test_alokesohpd
+Content-Type: application/json; charset=utf-8
+Content-Length: 0
+Accept: application/json
+Authorization: Basic OjE4MDIxNjY2NTMyODcwNDYzMDE=
+HTTP 204 (NoContent)
+Content-Type: application/json
+Content-Length: 0
+X-Frame-Options: sameorigin
+Strict-Transport-Security: max-age=31536000;
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: origin-when-cross-origin
+mixed-content: noupgrade
+TeamCity-Node-Id: MAIN_SERVER
+Set-Cookie: TCSESSIONID=9FDB647C6FBE8DFE9F7729992EC3A35C; Path=/; HttpOnly, RecentLogin=; Max-Age=10; Expires=Sat, 23 Nov 2024 16:40:39 GMT; Path=/, RememberMe=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:10 GMT; Path=/; HttpOnly
+Cache-Control: no-store
+Date: Sat, 23 Nov 2024 16:40:29 GMT
+Cookie: TCSESSIONID=9FDB647C6FBE8DFE9F7729992EC3A35C, Domain: 172.17.0.1, HTTP-only: True, Secure: False
+Cookie: RecentLogin=, Domain: 172.17.0.1, HTTP-only: False, Secure: False
+Response time: 11.8728 ms
+DELETE http://172.17.0.1:8111/app/rest/buildTypes/id:test_mwjrymanlw
+Content-Type: application/json; charset=utf-8
+Content-Length: 0
+Accept: application/json
+Authorization: Basic OjE4MDIxNjY2NTMyODcwNDYzMDE=
+HTTP 404 (NotFound)
+Content-Type: text/plain
+Content-Length: 301
+X-Frame-Options: sameorigin
+Strict-Transport-Security: max-age=31536000;
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: origin-when-cross-origin
+mixed-content: noupgrade
+TeamCity-Node-Id: MAIN_SERVER
+Set-Cookie: TCSESSIONID=4C3F04485D0E5E40372A654A83A893BC; Path=/; HttpOnly, RecentLogin=; Max-Age=10; Expires=Sat, 23 Nov 2024 16:40:39 GMT; Path=/, RememberMe=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:10 GMT; Path=/; HttpOnly
+Cache-Control: no-store
+Transfer-Encoding: chunked
+Date: Sat, 23 Nov 2024 16:40:29 GMT
+Cookie: TCSESSIONID=4C3F04485D0E5E40372A654A83A893BC, Domain: 172.17.0.1, HTTP-only: True, Secure: False
+Cookie: RecentLogin=, Domain: 172.17.0.1, HTTP-only: False, Secure: False
+Responding with error, status code: 404 (Not Found).
+Details: jetbrains.buildServer.server.rest.errors.NotFoundException: No build type nor template is found by id 'test_mwjrymanlw'.
+Could not find the entity requested. Check the reference is correct and the user has permissions to access the entity.
+Response time: 4.5202 ms
