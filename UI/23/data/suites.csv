@@ -1,0 +1,6 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Sat Nov 23 16:42:41 GMT 2024","Sat Nov 23 16:42:48 GMT 2024","7134","","","","SearchProjectTests","UserSearchesProjectByFullName","User should be able search project by full name",""
+"passed","Sat Nov 23 16:42:21 GMT 2024","Sat Nov 23 16:42:39 GMT 2024","17783","","","","CreateProjectTests","UserCreatesProject","User should be able to create project",""
+"passed","Sat Nov 23 16:40:14 GMT 2024","Sat Nov 23 16:41:03 GMT 2024","48846","","","","SetupServerTests","SetupTeamCityServer","SetupTeamCityServer",""
+"passed","Sat Nov 23 16:41:13 GMT 2024","Sat Nov 23 16:42:06 GMT 2024","52807","","","","CreateBuildTypeTests","UserCreatesBuildType","User should be able to create build type",""
+"passed","Sat Nov 23 16:42:06 GMT 2024","Sat Nov 23 16:42:20 GMT 2024","13565","","","","CreateBuildTypeTests","UserCreatesBuildTypeWithoutName","User should not be able to create build type without name",""
