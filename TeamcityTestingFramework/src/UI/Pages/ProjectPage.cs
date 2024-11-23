@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Allure.NUnit.Attributes;
+using Microsoft.Playwright;
 
 namespace TeamcityTestingFramework.src.UI.Pages
 {
@@ -16,6 +17,7 @@ namespace TeamcityTestingFramework.src.UI.Pages
             _projectTitle = Page.Locator("span[class*='ProjectPageHeader']");
         }
 
+        [AllureStep("Open project page")]
         public async Task NavigateAsync()
         {
             await Page.GotoAsync(string.Format(PROJECT_URL, _projectId));

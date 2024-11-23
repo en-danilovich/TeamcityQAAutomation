@@ -26,7 +26,7 @@ namespace TeamcityTestingFramework.Tests
         public void TestTearDown()
         {
             softy.AssertAll();
-            //TestDataStorage.GetInstance().DeleteCreatedEntities();
+            TestDataStorage.GetInstance().DeleteCreatedEntities();
         }
     }
 }

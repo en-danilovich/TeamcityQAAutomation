@@ -42,9 +42,36 @@ jobs:
     - name: Run tests
       continue-on-error: true
       shell: bash
-      run: |      
+      run: |
         export SELENIUM_REMOTE_URL="http://${{ env.HOST }}:4444"
         echo "SELENIUM_REMOTE_URL=$SELENIUM_REMOTE_URL"
         dotnet test --filter "FullyQualifiedName~Tests.${{ inputs.tests_folder }}&Category=Regression"
       env:
         HOST: ${{ env.HOST }}
+
+    # Загружаем историю Allure Report с специальной ветки gh-pages (https://allurereport.org/docs/integrations-github/)
+    - name: Load test report history
+      uses: actions/checkout@v2
+      if: always()
+      continue-on-error: true
+      with:
+        ref: gh-pages
+        path: gh-pages
+      
+    - name: Build test report
+      uses: simple-elf/allure-report-action@v1.7
+      if: always()
+      with:
+        gh_pages: gh-pages
+        allure_history: allure-history
+        allure_results: target/allure-results
+        subfolder: ${{ inputs.tests_folder }}
+    
+    # Создаем пустую ветку gh-pages на основе инструкции https://gist.github.com/ramnathv/2227408
+    - name: Publish test report
+      uses: peaceiris/actions-gh-pages@v3
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: allure-history
