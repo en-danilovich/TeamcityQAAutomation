@@ -1,6 +1,8 @@
 name: TeamCity deployment
 
-on: push
+on:
+    push:
+    workflow_dispatch:
 
 jobs:
     # Build backend and deploy on staging/review app
