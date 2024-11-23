@@ -74,6 +74,10 @@ namespace TeamcityTestingFramework.Tests.UI
             var loginPage = new LoginPage(Page);
             await loginPage.NavigateAsync();
             await loginPage.LoginAsync(user);
+            
+            var projectPage = new ProjectsPage(Page);
+            await Page.WaitForURLAsync($"**{ProjectsPage.PROJECTS_URL}");
+            await projectPage.ProjectsLink.WaitForAsync(new LocatorWaitForOptions() { State = WaitForSelectorState.Visible });
         }
 
         protected void CreateProjectWithBuildType()

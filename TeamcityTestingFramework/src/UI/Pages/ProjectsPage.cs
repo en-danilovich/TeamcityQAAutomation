@@ -10,6 +10,8 @@ namespace TeamcityTestingFramework.src.UI.Pages
 
         private string _headerStringLocator = ".MainPanel__router--gF > div";
 
+        public readonly ILocator ProjectsLink;
+
         private ILocator _projectElements;
         private ILocator _header;
         private ILocator _childProjectsLoader;
@@ -19,6 +21,7 @@ namespace TeamcityTestingFramework.src.UI.Pages
 
         public ProjectsPage(IPage page) : base(page)
         {
+            ProjectsLink = Page.GetByTitle("Projects");
             _projectElements = Page.Locator("div[class*='Subproject__container']");
             _header = Page.Locator(_headerStringLocator);
             _childProjectsLoader = Page.Locator(".ring-loader-inline-children");

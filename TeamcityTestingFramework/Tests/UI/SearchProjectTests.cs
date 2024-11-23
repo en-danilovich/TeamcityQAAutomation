@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Allure.NUnit.Attributes;
+using Microsoft.Playwright;
 using TeamcityTestingFramework.src.Api.Enums;
 using TeamcityTestingFramework.src.Api.Models;
 using TeamcityTestingFramework.src.UI.Pages;
@@ -8,7 +9,8 @@ namespace TeamcityTestingFramework.Tests.UI
     [Category("Regression"), Category("UI")]
     public class SearchProjectTests : BaseUITest
     {
-        [Test(Description = "User should be able search project by full name")]
+        [Test]
+        [AllureName("User should be able search project by full name")]
         [Category("Positive")]
         public async Task UserSearchesProjectByFullName()
         {

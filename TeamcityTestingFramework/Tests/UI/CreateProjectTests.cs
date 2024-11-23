@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Allure.NUnit.Attributes;
+using Microsoft.Playwright;
 using TeamcityTestingFramework.src.Api.Enums;
 using TeamcityTestingFramework.src.Api.Models;
 using TeamcityTestingFramework.src.Constants;
@@ -11,7 +12,8 @@ namespace TeamcityTestingFramework.Tests.UI
     [Category("Regression"), Category("UI")]
     public class CreateProjectTests : BaseUITest
     {
-        [Test(Description = "User should be able to create project")]
+        [Test]
+        [AllureName("User should be able to create project")]
         [Category("Positive")]
         public async Task UserCreatesProject()
         {
@@ -37,8 +39,8 @@ namespace TeamcityTestingFramework.Tests.UI
             var project = (await projectsPage.GetProjectsAsync()).FindProjectWithName(TestData.Project.name);
             softy.Assert(() => Assert.That(project, Is.Not.Null));
         }
-
-        [Test(Description = "User should not be able to create project without name")]
+                
+        [AllureName("User should not be able to create project without name")]
         [Category("Negative")]
         public void UserCreatesProjectWithoutName()
         {
