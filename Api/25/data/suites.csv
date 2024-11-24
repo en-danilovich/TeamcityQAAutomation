@@ -1,0 +1,12 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Sun Nov 24 10:29:47 GMT 2024","Sun Nov 24 10:29:49 GMT 2024","2366","","","","BuildTypeTests","ProjectAdminCreatesBuildType","ProjectAdminCreatesBuildType","Project admin should be able to create build type for their project
+"
+"passed","Sun Nov 24 10:29:50 GMT 2024","Sun Nov 24 10:29:50 GMT 2024","274","","","","BuildTypeTests","UserCreatesTwoBuildTypesWithTheSameId","UserCreatesTwoBuildTypesWithTheSameId","User should not be able to create two build types with the same id
+"
+"passed","Sun Nov 24 10:29:50 GMT 2024","Sun Nov 24 10:29:50 GMT 2024","320","","","","BuildTypeTests","UserCreatesBuildType","UserCreatesBuildType","User should be able to create build type
+"
+"passed","Sun Nov 24 10:28:47 GMT 2024","Sun Nov 24 10:29:36 GMT 2024","48536","","","","SetupServerTests","SetupTeamCityServer","SetupTeamCityServer",""
+"passed","Sun Nov 24 10:29:50 GMT 2024","Sun Nov 24 10:29:50 GMT 2024","204","","","","BuildTypeTests","UserGetsProjectDetailsByNameLocator","UserGetsProjectDetailsByNameLocator","User should be able to get project details by name locator
+"
+"passed","Sun Nov 24 10:29:49 GMT 2024","Sun Nov 24 10:29:50 GMT 2024","376","","","","BuildTypeTests","ProjectAdminCreatesBuildTypeForAnotherUserProject","ProjectAdminCreatesBuildTypeForAnotherUserProject","Project admin should not be able to create build type for not their project
+"
