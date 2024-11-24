@@ -1,0 +1,38 @@
+POST http://172.17.0.1:8111/app/rest/projects
+Content-Type: application/json; charset=utf-8
+Content-Length: 64
+Accept: application/json
+Authorization: Basic OjQzNDk3MDYwMzQxODkwMjcxODQ=
+{
+  "id": "test_sbehrhqwob",
+  "name": "test_cukgfvafqp",
+  "locator": null
+}
+POST http://172.17.0.1:8111/app/rest/users
+Content-Type: application/json; charset=utf-8
+Content-Length: 123
+Accept: application/json
+Authorization: Basic OjQzNDk3MDYwMzQxODkwMjcxODQ=
+{
+  "id": 0,
+  "username": "test_mpwfyzsvca",
+  "password": "test_aomkljhldr",
+  "roles": {
+    "role": [
+      {
+        "roleId": "SYSTEM_ADMIN",
+        "scope": "g"
+      }
+    ]
+  }
+}
+DELETE http://172.17.0.1:8111/app/rest/users/id:4
+Content-Type: application/json; charset=utf-8
+Content-Length: 0
+Accept: application/json
+Authorization: Basic OjQzNDk3MDYwMzQxODkwMjcxODQ=
+DELETE http://172.17.0.1:8111/app/rest/projects/id:test_sbehrhqwob
+Content-Type: application/json; charset=utf-8
+Content-Length: 0
+Accept: application/json
+Authorization: Basic OjQzNDk3MDYwMzQxODkwMjcxODQ=
